@@ -24,6 +24,5 @@ Contains all formats of icons required for the various operative systems.
 Contains all formats of splash screens required for the various operative systems.
 
 ### lib folder
-Contains all the libraries, frameworks, CSS and images needed to the app.
-Provided frameworks:
-* add2home - it makes appear a message to allow the user to create a web app container on iOS from the browser version
+Contains all the libraries, frameworks, CSS and images needed to the app. Provided frameworks:
+* **add2home** - it makes appear a message to allow the user to create a web app container on iOS from the browser version
