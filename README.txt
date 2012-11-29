@@ -1,1 +1,0 @@
-PhoneGap Build App Template
