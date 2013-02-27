@@ -11,6 +11,12 @@ You can easly replace or modify the resources of the project to create your own 
 ### index.html
 Your main page, that's the first page that the app will show when loaded.
 
+### manifest.webapp
+Open Web App manifest, useful if you wish to create a web app for Firefox or Firefox OS.
+
+### manifest.appcache
+App cache manifest, useful to declare what resources can be cached and what resources must always reload. It can be used to create an offline web app, or a web Firefox OS app.
+
 ### config.xml
 The configurations file. See [Using config.xml](https://build.phonegap.com/docs/config-xml) to learn how to personalize yours. It's already formatted with the most common settings.
 
