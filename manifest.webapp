@@ -8,19 +8,19 @@
     "appcache_path": "/manifest.appcache",
     "fullscreen": "false",
     "icons": {
-        "16": "/icons/webapp/icon16.png",
-        "30": "/icons/webapp/icon30.png",
-        "32": "/icons/webapp/icon32.png",
-        "48": "/icons/webapp/icon48.png",
-        "60": "/icons/webapp/icon60.png",
-        "64": "/icons/webapp/icon64.png",
-        "128": "/icons/webapp/icon128.png",
-        "256": "/icons/webapp/icon256.png",
-        "512": "/icons/webapp/icon512.png"
+        "16": "/img/icons/webapp/icon16.png",
+        "30": "/img/icons/webapp/icon30.png",
+        "32": "/img/icons/webapp/icon32.png",
+        "48": "/img/icons/webapp/icon48.png",
+        "60": "/img/icons/webapp/icon60.png",
+        "64": "/img/icons/webapp/icon64.png",
+        "128": "/img/icons/webapp/icon128.png",
+        "256": "/img/icons/webapp/icon256.png",
+        "512": "/img/icons/webapp/icon512.png"
     },
     "developer": {
         "name": "Daniele Veneroni",
-        "url": "http://veneronslabs.wordpress.com/"
+        "url": "http://venerons.github.io/"
     },
     "default_locale": "en",
     "locales": {

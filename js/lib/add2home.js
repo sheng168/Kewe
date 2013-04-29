@@ -1,5 +1,5 @@
 /*!
- * Add to Homescreen v2.0 ~ Copyright (c) 2012 Matteo Spinelli, http://cubiq.org
+ * Add to Homescreen v2.0.7 ~ Copyright (c) 2013 Matteo Spinelli, http://cubiq.org
  * Released under MIT license, http://cubiq.org/license
  */
 var addToHome = (function (w) {
@@ -12,6 +12,7 @@ var addToHome = (function (w) {
 		OSVersion,
 		startX = 0,
 		startY = 0,
+		lastVisit = 0,
 		isExpired,
 		isSessionActive,
 		isReturningVisitor,
@@ -34,12 +35,15 @@ var addToHome = (function (w) {
 			touchIcon: false,			// Display the touch icon
 			arrow: true,				// Display the balloon arrow
 			hookOnLoad: true,			// Should we hook to onload event? (really advanced usage)
+			closeButton: true,			// Let the user close the balloon
 			iterations: 100				// Internal/debug use
 		},
 
 		intl = {
+			ar:    '<span dir="rtl">قم بتثبيت هذا التطبيق على <span dir="ltr">%device:</span>انقر<span dir="ltr">%icon</span> ،<strong>ثم اضفه الى الشاشة الرئيسية.</strong></span>',
 			ca_es: 'Per instal·lar aquesta aplicació al vostre %device premeu %icon i llavors <strong>Afegir a pantalla d\'inici</strong>.',
-			da_dk: 'Tilføj denne side til din %device: tryk på %icon og derefter <strong>Tilføj til hjemmeskærm</strong>.',
+			cs_cz: 'Pro instalaci aplikace na Váš %device, stiskněte %icon a v nabídce <strong>Přidat na plochu</strong>.',
+			da_dk: 'Tilføj denne side til din %device: tryk på %icon og derefter <strong>Føj til hjemmeskærm</strong>.',
 			de_de: 'Installieren Sie diese App auf Ihrem %device: %icon antippen und dann <strong>Zum Home-Bildschirm</strong>.',
 			el_gr: 'Εγκαταστήσετε αυτήν την Εφαρμογή στήν συσκευή σας %device: %icon μετά πατάτε <strong>Προσθήκη σε Αφετηρία</strong>.',
 			en_us: 'Install this web app on your %device: tap %icon and then <strong>Add to Home Screen</strong>.',
@@ -47,32 +51,34 @@ var addToHome = (function (w) {
 			fi_fi: 'Asenna tämä web-sovellus laitteeseesi %device: paina %icon ja sen jälkeen valitse <strong>Lisää Koti-valikkoon</strong>.',
 			fr_fr: 'Ajoutez cette application sur votre %device en cliquant sur %icon, puis <strong>Ajouter à l\'écran d\'accueil</strong>.',
 			he_il: '<span dir="rtl">התקן אפליקציה זו על ה-%device שלך: הקש %icon ואז <strong>הוסף למסך הבית</strong>.</span>',
+			hr_hr: 'Instaliraj ovu aplikaciju na svoj %device: klikni na %icon i odaberi <strong>Dodaj u početni zaslon</strong>.',
 			hu_hu: 'Telepítse ezt a web-alkalmazást az Ön %device-jára: nyomjon a %icon-ra majd a <strong>Főképernyőhöz adás</strong> gombra.',
 			it_it: 'Installa questa applicazione sul tuo %device: premi su %icon e poi <strong>Aggiungi a Home</strong>.',
 			ja_jp: 'このウェブアプリをあなたの%deviceにインストールするには%iconをタップして<strong>ホーム画面に追加</strong>を選んでください。',
 			ko_kr: '%device에 웹앱을 설치하려면 %icon을 터치 후 "홈화면에 추가"를 선택하세요',
 			nb_no: 'Installer denne appen på din %device: trykk på %icon og deretter <strong>Legg til på Hjem-skjerm</strong>',
-			nl_nl: 'Installeer deze webapp op uw %device: tik %icon en dan <strong>Zet in beginscherm</strong>.',
+			nl_nl: 'Installeer deze webapp op uw %device: tik %icon en dan <strong>Voeg toe aan beginscherm</strong>.',
 			pl_pl: 'Aby zainstalować tę aplikacje na %device: naciśnij %icon a następnie <strong>Dodaj jako ikonę</strong>.',
-			pt_br: 'Instale este web app em seu %device: aperte %icon e selecione <strong>Adicionar à Tela Inicio</strong>.',
+			pt_br: 'Instale este aplicativo em seu %device: aperte %icon e selecione <strong>Adicionar à Tela Inicio</strong>.',
 			pt_pt: 'Para instalar esta aplicação no seu %device, prima o %icon e depois o <strong>Adicionar ao ecrã principal</strong>.',
 			ru_ru: 'Установите это веб-приложение на ваш %device: нажмите %icon, затем <strong>Добавить в «Домой»</strong>.',
 			sv_se: 'Lägg till denna webbapplikation på din %device: tryck på %icon och därefter <strong>Lägg till på hemskärmen</strong>.',
 			th_th: 'ติดตั้งเว็บแอพฯ นี้บน %device ของคุณ: แตะ %icon และ <strong>เพิ่มที่หน้าจอโฮม</strong>',
-			tr_tr: '%device için bu uygulamayı kurduktan sonra %icon simgesine dokunarak <strong>Ev Ekranına Ekle</strong>yin.',
+			tr_tr: 'Bu uygulamayı %device\'a eklemek için %icon simgesine sonrasında <strong>Ana Ekrana Ekle</strong> düğmesine basın.',
+			uk_ua: 'Встановіть цей веб сайт на Ваш %device: натисніть %icon, а потім <strong>На початковий екран</strong>.',
 			zh_cn: '您可以将此应用程式安装到您的 %device 上。请按 %icon 然后点选<strong>添加至主屏幕</strong>。',
 			zh_tw: '您可以將此應用程式安裝到您的 %device 上。請按 %icon 然後點選<strong>加入主畫面螢幕</strong>。'
 		};
 
 	function init () {
-		// Preliminary check, prevents all further checks to be performed on iDevices only
+		// Preliminary check, all further checks are performed on iDevices only
 		if ( !isIDevice ) return;
 
 		var now = Date.now(),
 			i;
 
 		// Merge local with global options
-		if (w.addToHomeConfig) {
+		if ( w.addToHomeConfig ) {
 			for ( i in w.addToHomeConfig ) {
 				options[i] = w.addToHomeConfig[i];
 			}
@@ -81,18 +87,20 @@ var addToHome = (function (w) {
 
 		isIPad = (/ipad/gi).test(nav.platform);
 		isRetina = w.devicePixelRatio && w.devicePixelRatio > 1;
-		isSafari = nav.appVersion.match(/Safari/gi);
+		isSafari = (/Safari/i).test(nav.appVersion) && !(/CriOS/i).test(nav.appVersion);
 		isStandalone = nav.standalone;
-		
 		OSVersion = nav.appVersion.match(/OS (\d+_\d+)/i);
-		OSVersion = OSVersion[1] ? +OSVersion[1].replace('_', '.') : 0;
-		
-		isExpired = +w.localStorage.getItem('addToHome') || now;
+		OSVersion = OSVersion && OSVersion[1] ? +OSVersion[1].replace('_', '.') : 0;
+
+		lastVisit = +w.localStorage.getItem('addToHome');
+
 		isSessionActive = w.sessionStorage.getItem('addToHomeSession');
-		isReturningVisitor = !options.returningVisitor || ( isExpired && isExpired + 28*24*60*60*1000 > now );			// You are considered a "returning visitor" if you access the site more than once/month
+		isReturningVisitor = options.returningVisitor ? lastVisit && lastVisit + 28*24*60*60*1000 > now : true;
+
+		if ( !lastVisit ) lastVisit = now;
 
 		// If it is expired we need to reissue a new balloon
-		isExpired = ( !options.expire || isExpired <= now );
+		isExpired = isReturningVisitor && lastVisit <= now;
 
 		if ( options.hookOnLoad ) w.addEventListener('load', loaded, false);
 		else if ( !options.hookOnLoad && options.autostart ) loaded();
@@ -101,19 +109,14 @@ var addToHome = (function (w) {
 	function loaded () {
 		w.removeEventListener('load', loaded, false);
 
-		if ( !overrideChecks && (!isSafari || !isExpired || isSessionActive || isStandalone || !isReturningVisitor) ) return;
+		if ( !isReturningVisitor ) w.localStorage.setItem('addToHome', Date.now());
+		else if ( options.expire && isExpired ) w.localStorage.setItem('addToHome', Date.now() + options.expire * 60000);
 
-		if ( options.expire || options.returningVisitor ) {
-			w.localStorage.setItem('addToHome', Date.now() + options.expire * 60000);
-		}
+		if ( !overrideChecks && ( !isSafari || !isExpired || isSessionActive || isStandalone || !isReturningVisitor ) ) return;
 
-		var icons = options.touchIcon ? document.querySelectorAll('head link[rel=apple-touch-icon],head link[rel=apple-touch-icon-precomposed]') : [],
-			sizes,
-			touchIcon = '',
-			closeButton,
+		var touchIcon = '',
 			platform = nav.platform.split(' ')[0],
-			language = nav.language.replace('-', '_'),
-			i, l;
+			language = nav.language.replace('-', '_');
 
 		balloon = document.createElement('div');
 		balloon.id = 'addToHomeScreen';
@@ -128,49 +131,43 @@ var addToHome = (function (w) {
 			options.message = language in intl ? intl[language] : intl['en_us'];
 		}
 
-		// Search for the apple-touch-icon
-		if ( icons.length ) {
-			for ( i = 0, l = icons.length; i < l; i++ ) {
-				sizes = icons[i].getAttribute('sizes');
+		if ( options.touchIcon ) {
+			touchIcon = isRetina ?
+				document.querySelector('head link[rel^=apple-touch-icon][sizes="114x114"],head link[rel^=apple-touch-icon][sizes="144x144"],head link[rel^=apple-touch-icon]') :
+				document.querySelector('head link[rel^=apple-touch-icon][sizes="57x57"],head link[rel^=apple-touch-icon]');
 
-				if ( sizes ) {
-					if ( isRetina && sizes == '114x114' ) {
-						touchIcon = icons[i].href;
-						break;
-					}
-				} else {
-					touchIcon = icons[i].href;
-				}
+			if ( touchIcon ) {
+				touchIcon = '<span style="background-image:url(' + touchIcon.href + ')" class="addToHomeTouchIcon"></span>';
 			}
-
-			touchIcon = '<span style="background-image:url(' + touchIcon + ')" class="addToHomeTouchIcon"></span>';
 		}
 
 		balloon.className = (isIPad ? 'addToHomeIpad' : 'addToHomeIphone') + (touchIcon ? ' addToHomeWide' : '');
 		balloon.innerHTML = touchIcon +
 			options.message.replace('%device', platform).replace('%icon', OSVersion >= 4.2 ? '<span class="addToHomeShare"></span>' : '<span class="addToHomePlus">+</span>') +
 			(options.arrow ? '<span class="addToHomeArrow"></span>' : '') +
-			'<span class="addToHomeClose">\u00D7</span>';
+			(options.closeButton ? '<span class="addToHomeClose">\u00D7</span>' : '');
 
 		document.body.appendChild(balloon);
 
 		// Add the close action
-		closeButton = balloon.querySelector('.addToHomeClose');
-		if ( closeButton ) closeButton.addEventListener('click', clicked, false);
+		if ( options.closeButton ) balloon.addEventListener('click', clicked, false);
+
+		if ( !isIPad && OSVersion >= 6 ) window.addEventListener('orientationchange', orientationCheck, false);
 
 		setTimeout(show, options.startDelay);
 	}
 
 	function show () {
 		var duration,
-			iPadXShift = 160;
+			iPadXShift = 208;
 
 		// Set the initial position
 		if ( isIPad ) {
 			if ( OSVersion < 5 ) {
 				startY = w.scrollY;
 				startX = w.scrollX;
-				iPadXShift = 208;
+			} else if ( OSVersion < 6 ) {
+				iPadXShift = 160;
 			}
 
 			balloon.style.top = startY + options.bottomOffset + 'px';
@@ -199,7 +196,7 @@ var addToHome = (function (w) {
 				balloon.style.top = startY - balloon.offsetHeight - options.bottomOffset + 'px';
 			} else {
 				balloon.style.left = '50%';
-				balloon.style.marginLeft = -Math.round(balloon.offsetWidth / 2) + 'px';
+				balloon.style.marginLeft = -Math.round(balloon.offsetWidth / 2) - ( w.orientation%180 && OSVersion >= 6 ? 40 : 0 ) + 'px';
 				balloon.style.bottom = options.bottomOffset + 'px';
 			}
 
@@ -239,13 +236,16 @@ var addToHome = (function (w) {
 		clearTimeout( closeTimeout );
 		closeTimeout = null;
 
+		// check if the popup is displayed and prevent errors
+		if ( !balloon ) return;
+
 		var posY = 0,
 			posX = 0,
 			opacity = '1',
-			duration = '0',
-			closeButton = balloon.querySelector('.addToHomeClose');
+			duration = '0';
 
-		if ( closeButton ) closeButton.removeEventListener('click', close, false);
+		if ( options.closeButton ) balloon.removeEventListener('click', clicked, false);
+		if ( !isIPad && OSVersion >= 6 ) window.removeEventListener('orientationchange', orientationCheck, false);
 
 		if ( OSVersion < 5 ) {
 			posY = isIPad ? w.scrollY - startY : w.scrollY + w.innerHeight - startY;
@@ -259,20 +259,20 @@ var addToHome = (function (w) {
 				if ( isIPad ) {
 					duration = '0.4s';
 					opacity = '0';
-					posY = posY + 50;
+					posY += 50;
 				} else {
 					duration = '0.6s';
-					posY = posY + balloon.offsetHeight + options.bottomOffset + 50;
+					posY += balloon.offsetHeight + options.bottomOffset + 50;
 				}
 				break;
 			case 'bubble':
 				if ( isIPad ) {
 					duration = '0.8s';
-					posY = posY - balloon.offsetHeight - options.bottomOffset - 50;
+					posY -= balloon.offsetHeight + options.bottomOffset + 50;
 				} else {
 					duration = '0.4s';
 					opacity = '0';
-					posY = posY - 50;
+					posY -= 50;
 				}
 				break;
 			default:
@@ -327,6 +327,10 @@ var addToHome = (function (w) {
 		w.sessionStorage.removeItem('addToHomeSession');
 	}
 
+	function orientationCheck () {
+		balloon.style.marginLeft = -Math.round(balloon.offsetWidth / 2) - ( w.orientation%180 && OSVersion >= 6 ? 40 : 0 ) + 'px';
+	}
+
 	// Bootstrap!
 	init();
 
@@ -335,4 +339,4 @@ var addToHome = (function (w) {
 		close: close,
 		reset: reset
 	};
-})(this);
+})(window);
