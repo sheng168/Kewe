@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	<widget xmlns = "http://www.w3.org/ns/widgets"
-		xmlns:gap = "http://phonegap.com/ns/1.0"
+    <widget xmlns = "http://www.w3.org/ns/widgets" 
+        xmlns:gap = "http://phonegap.com/ns/1.0"
 		id = "it.venerons.APPLICATION"
 		version = "1.0.0"
 		versionCode = "1">
@@ -13,7 +13,7 @@
 
     <author href="http://venerons.github.io" email="veneronslaboratories@gmail.com">
         Daniele Veneroni
-	</author>
+    </author>
         
     <!-- ICONS -->
         
@@ -60,31 +60,44 @@
     <gap:splash src="img/splash/winphone/splash.jpg" gap:platform="winphone" /> <!-- Windows Phone 7 480x800 -->
         
     <gap:splash src="img/splash/webos/splash.png" gap:platform="webos" /> <!-- WebOS 64x64 -->
+
+    <!-- PLATFORM SELECTION -->
+
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
+    <gap:platform name="webos" />
+    <gap:platform name="symbian" />
+    <gap:platform name="blackberry" />
+    <gap:platform name="winphone" />
         
     <!-- GENERAL PREFERENCES -->
         
-    <preference name="phonegap-version" value="2.9.0" />
+    <preference name="phonegap-version" value="3.0.0" />
     <preference name="orientation" value="default" />
-    <preference name="target-device" value="universal" />
     <preference name="fullscreen" value="true" /> <!-- remove the upper bar on iOS and Android -->
         
     <!-- iOS PREFERENCES -->
-        
-    <preference name="webviewbounce" value="false" />
+    
+    <preference name="target-device" value="universal" />
     <preference name="prerendered-icon" value="true" />
-    <preference name="stay-in-webview" value="false" />
     <preference name="ios-statusbarstyle" value="black-opaque" />
     <preference name="detect-data-types" value="false" />
     <preference name="exit-on-suspend" value="false" />
+
+    <preference name="webviewbounce" value="false" />
+    <preference name="stay-in-webview" value="false" />
     <preference name="show-splash-screen-spinner" value="false" />
     <preference name="auto-hide-splash-screen" value="true" /> <!-- if set to false, the splash screen must be hidden using a JavaScript API -->
         
     <!-- ANDROID PREFERENCES -->
         
     <preference name="android-minSdkVersion" value="7" /> <!-- minimum Android 2.1 -->
-    <!-- <preference name="android-maxSdkVersion" value="17" /> maximum Android 4.2 -->
+    <!-- <preference name="android-maxSdkVersion" value="18" /> maximum Android 4.3 -->
+    <preference name="android-targetSdkVersion" value="18" /> <!-- targeting Android 4.3 -->
     <preference name="android-installLocation" value="auto" />
-    <preference name="splash-screen-duration" value="3000" />
+    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
+    <preference name="splash-screen-duration" value="5000" />
+
     <preference name="load-url-timeout" value="20000" />
         
     <!-- BLACKBERRY PREFERENCES -->
@@ -94,5 +107,17 @@
     <!-- PHONEGAP API FEATURES PREFERENCES -->
         
     <preference name="permissions" value="none"/>
+    <!--
+    <feature name="http://api.phonegap.com/1.0/battery"/>
+    <feature name="http://api.phonegap.com/1.0/camera"/>
+    <feature name="http://api.phonegap.com/1.0/contacts"/>
+    <feature name="http://api.phonegap.com/1.0/file"/>
+    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+    <feature name="http://api.phonegap.com/1.0/media"/>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+    <feature name="http://api.phonegap.com/1.0/notification"/>
+    -->
+
+    <access origin="*" />
 
 </widget>
