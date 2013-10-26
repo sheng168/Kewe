@@ -2,7 +2,7 @@
 
 _Copyright (c) 2012-2013 Daniele Veneroni. Released under MIT License._
 
-PhoneGap Build App Template is a template (a ready-to-use project) to create web app and it's formatted to be easly wrapped on a stand-alone application using PhoneGap Build to build app for iOS, Android, Windows Phone, BlackBerry, WebOS and Symbian.
+PhoneGap Build App Template is a template (a ready-to-use project) to create web app and it's formatted to be easly wrapped on a stand-alone application using PhoneGap Build to build app for iOS, Android and Windows Phone.
 
 You can easly replace or modify the resources of the project to create your own app.
 
@@ -31,5 +31,5 @@ Contains all formats of splash screens required for the various operative system
 
 ### js/lib folder
 Contains all the libraries, frameworks, CSS and images needed to the app. Provided frameworks:
-* **jQuery 2.0.0** - latest version of the classic utility library
+* **jQuery 2.0.3** - latest version of the classic utility library
 * **add2home 2.0.7** - it makes appear a message to allow the user to create a web app container on iOS from the browser version
