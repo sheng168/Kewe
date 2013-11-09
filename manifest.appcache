@@ -1,9 +1,5 @@
 CACHE MANIFEST
-# 14-10-2013:v1
-
-# Explicitly cached entries
-index.html
-LICENSE.md
+# 09-11-2013:v1
 
 # page that will be displayed if the user is offline
 FALLBACK:
@@ -12,7 +8,9 @@ FALLBACK:
 NETWORK:
 *
 
-# Additional resources to cache
+# Resources to cache
 CACHE:
+index.html
 manifest.webapp
+LICENSE.md
 js/lib/jquery-2.0.3.js
