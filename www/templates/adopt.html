@@ -1,0 +1,41 @@
+<!--
+  This template loads for the 'tab.adopt' state (app.js)
+-->
+<ion-view title="Calculator">
+  <ion-content has-header="true" has-tabs="true">
+    <div class="list list-inset">
+      <label class="item item-input">
+        <span class="input-label">Amount $</span>
+        <input type="number" ng-model="bill.amount" required>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Percent</span>
+          <input type="number" ng-model="bill.percent" required>
+		<select ng-show="false" type='number' ng-model="bill.percent">
+			<option ng-repeat="c in range(0,30)">{{c}}</option>
+		</select>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Tip</span>
+        <span>{{ bill.tip() | currency}}</span>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Total</span>
+        <span>{{ bill.total() | currency}}</span>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Split</span>
+          <input type="number" ng-model="bill.split" required>
+        <select ng-show="false" type='number' ng-model="bill.split">
+          <option ng-repeat="c in range(1,30)">{{c}}</option>
+        </select>
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Each </span>
+        <span>{{ bill.each() | currency}}</span>
+      </label>
+      <ion-toggle ng-model="bill.round">Round Up ({{bill.roundPercent()|number:1}}%)</ion-toggle>
+      <button ng-show="false" class="button button-positive button-block" ng-click="save()">Save</button>
+    </div>
+  </ion-content>
+</ion-view>

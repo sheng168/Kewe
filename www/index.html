@@ -1,64 +1,49 @@
-<!doctype html>
-<html manifest="manifest.appcache" lang="en"> 
-	<head> 
-        <title>APPLICATION NAME</title> 
-        
-        <!-- WEB SEARCH META TAGS -->
-        <meta charset="utf-8">
-        <meta name="application-name" content="APPLICATION NAME" />
-        <meta name="author" content="AUTHOR NAME (@TWITTER)" />
-        <meta name="description" content="APPLICATION DESCRIPTION" />
-        <meta name="keywords" content="keywords,separated,by,commas" />
-        <meta name="copyright" content="© 2013 AUTHOR" />
-        <meta name="generator" content="AUTHOR" />
-        <meta name="robots" content="index,follow,snippet,archive" />
-        <meta name="revisit-after" content="7 days">
-        
-        <!-- SAFARI WEB APP META TAGS -->
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>Ionic Seed App</title>
 
-        <!-- iOS FAVICONS -->
-        <link rel="apple-touch-icon-precomposed" href="img/icons/favicons/icon57.png">
-        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="img/icons/favicons/icon57.png">
-        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/icons/favicons/icon72.png">
-        <link rel="apple-touch-icon-precomposed" sizes="76x76" href="img/icons/favicons/icon76.png">
-        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/icons/favicons/icon114.png">
-        <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/icons/favicons/icon120.png">
-        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/icons/favicons/icon144.png">
-        <link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/icons/favicons/icon152.png">
+    <!-- ionic css -->
+    <link href="lib/css/ionic.css" rel="stylesheet">
 
-        <!-- OTHER FAVICONS -->
-        <link rel="icon" sizes="16x16" type="image/vnd.microsoft.icon" href="img/icons/favicons/icon16.ico">
-        <link rel="icon" sizes="16x16" type="image/png" href="img/icons/favicons/icon16.png">
-        <link rel="icon" sizes="32x32" type="image/png" href="img/icons/favicons/icon32.png">
-        <link rel="icon" sizes="64x64" type="image/png" href="img/icons/favicons/icon64.png">
-        <link rel="icon" sizes="any" type="image/svg+xml" href="img/icons/favicons/icon.svg">
+    <!-- your app's css -->
+    <link href="css/app.css" rel="stylesheet">
 
-        <!-- iOS Splash Screens -->
-        <!-- iPhone -->
-        <link rel="apple-touch-startup-image" href="img/splash/ios/splash320x460.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 1)">
-        <!-- iPhone (Retina) -->
-        <link rel="apple-touch-startup-image" href="img/splash/ios/splash640x920.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)">
-        <!-- iPhone 5 -->
-        <link rel="apple-touch-startup-image" href="img/splash/ios/splash640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
-        <!-- iPad -->
-        <link rel="apple-touch-startup-image" href="img/splash/ios/splash768x1004.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 1)">
-        <link rel="apple-touch-startup-image" href="img/splash/ios/splash748x1024.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 1)">
-        <!-- iPad (Retina) -->
-        <link rel="apple-touch-startup-image" href="img/splash/ios/splash1536x2008.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)">
-        <link rel="apple-touch-startup-image" href="img/splash/ios/splash1496x2048.png" media="(device-width: 768px) and (device-height: 1024px) and (orientation: landscape) and (-webkit-device-pixel-ratio: 2)">
-            
-        <!-- ADD2HOME META TAGS -->
-        <link rel="stylesheet" type="text/css" href="js/lib/add2home.css">
-        <script type="application/javascript" src="js/lib/add2home.js"></script>
-    </head> 
-    <body> 
-        
-        App Content Tip
-        
-        <!-- SCRIPTS -->
-        <script type="application/javascript" src="js/lib/jquery-2.0.3.js"></script>
-    </body>
+    <!-- ionic/angularjs scripts -->
+    <script src="lib/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's script -->
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+  </head>
+
+  <!-- 
+    'starter' is the name of this angular module (js/app.js)
+  -->
+  <body ng-app="starter" animation="slide-left-right-ios7">
+
+    <!-- 
+      The nav bar that will be updated as we navigate between views
+      Additional attributes set its look, ion-nav-bar animation and icons
+      Icons provided by Ionicons: http://ionicons.com/ 
+    -->
+    <ion-nav-bar type="bar-positive" 
+             animation="nav-title-slide-ios7" 
+             back-button-type="button-icon button-clear" 
+             back-button-icon="ion-ios7-arrow-back"></ion-nav-bar>
+
+    <!-- 
+      The views will be rendered in the <ion-nav-view> directive below
+      Templates are in the /templates folder (but you could also
+      have templates inline in this html file if you'd like).
+    -->
+    <ion-nav-view></ion-nav-view>
+
+  </body>
 </html>
