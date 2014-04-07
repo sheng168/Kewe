@@ -67,8 +67,8 @@
     <preference name="fullscreen" value="false" /> <!-- remove the upper bar on iOS and Android -->
         
     <!-- iOS PREFERENCES -->
-    
-    <preference name="target-device" value="universal" />
+    <preference name="target-device" value="handset" />
+    <!--<preference name="target-device" value="universal" />-->
     <preference name="prerendered-icon" value="true" />
     <preference name="ios-statusbarstyle" value="black-opaque" />
     <preference name="detect-data-types" value="false" />
