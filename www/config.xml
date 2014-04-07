@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
     <widget xmlns = "http://www.w3.org/ns/widgets" 
         xmlns:gap = "http://phonegap.com/ns/1.0"
-		id = "it.venerons.APPLICATION"
-		version = "1.0.0"
+		id = "com.voved.tipfree"
+		version = "1.0"
 		versionCode = "1">
 
-    <name>APPLICATION NAME</name>
+    <name>Tip Calculator</name>
 
     <description>
-        APPLICATION DESCRIPTION
+        Tip Calculator
     </description>
 
-    <author href="http://venerons.github.io" email="veneronslaboratories@gmail.com">Daniele Veneroni</author>
+    <author href="http://voved.com" email="support@voved.com">Sheng Yu</author>
         
     <!-- ICONS -->
         
@@ -64,7 +64,7 @@
         
     <preference name="phonegap-version" value="3.1.0" />
     <preference name="orientation" value="default" />
-    <preference name="fullscreen" value="true" /> <!-- remove the upper bar on iOS and Android -->
+    <preference name="fullscreen" value="false" /> <!-- remove the upper bar on iOS and Android -->
         
     <!-- iOS PREFERENCES -->
     
@@ -86,7 +86,7 @@
     <preference name="android-targetSdkVersion" value="19" /> <!-- targeting Android 4.4 -->
     <preference name="android-installLocation" value="auto" />
     <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
-    <preference name="splash-screen-duration" value="5000" />
+    <preference name="splash-screen-duration" value="1000" />
 
     <preference name="load-url-timeout" value="20000" />
         
