@@ -1,0 +1,49 @@
+<ion-view title="Friends">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button ng-click="add()" class="button button-icon">Invite</button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <ion-list>
+      <ion-item class="item item-avatar" ng-repeat="item in items | orderByPriority | orderBy:'name'" href="#/app/person/{{item.objectId}}">
+          <img ng-src="{{item.imageFile.url || 'img/person.png'}}">
+        <h3>
+            {{item.first}} {{item.last}}</h3>
+        <p>{{item.createdAt}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
+
+
+<script id="modal.html" type="text/ng-template">
+    <div class="modal" ang-controller="ModalCtrl">
+        <ion-header-bar class="bar bar-header bar-positive">
+            <h1 class="title">Invite Friend</h1>
+            <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+        </ion-header-bar>
+        <ion-content>
+            <div class="padding">
+                <div class="list">
+                    <label class="item item-input">
+                        <span class="input-label">Phone Number</span>
+                        <input ng-model="invite.phone" type="text">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">First Name</span>
+                        <input ng-model="invite.first" type="text">
+                    </label>
+                    <label class="item item-input">
+                        <span class="input-label">Last Name</span>
+                        <input ng-model="invite.last" type="text">
+                    </label>
+
+                    {{invite.error}}
+                    <button class="button button-full button-positive" ng-click="doInvite()">Invite</button>
+                </div>
+            </div>
+        </ion-content>
+    </div>
+</script>

@@ -1,0 +1,35 @@
+<ion-view title="Messages {{server.connected?'Online':'Offline'}}">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+      <ol class="messages">
+          <li ng-repeat="item in items" class="my_msg_{{mine(item)}}">
+              <p>{{item.author}}: {{item.message}}</p>
+          </li>
+          <li ng-repeat="item in composes" class="my_msg_{{mine(item)}}">
+              <p>{{item.author}}: {{item.message}}...</p>
+          </li>
+      </ol>
+    <!--<ion-list>-->
+      <!--<ion-item ng-repeat="item in items">-->
+        <!--<p>@{{item.author}}: {{item.message}} </p>-->
+      <!--</ion-item>-->
+    <!--</ion-list>-->
+  </ion-content>
+
+    <form ng-submit="send()">
+    <ion-footer-bar align-title="left" class="bar-calm">
+        <div class="buttons">
+            <input ng-model="input.author" type="text" placeholder="Author">
+        </div>
+
+            <input ng-model="input.message" type="text" placeholder="Enter message">
+            <div class="buttons">
+                <button class="button">Send</button>
+            </div>
+
+
+    </ion-footer-bar>
+    </form>
+</ion-view>

@@ -1,0 +1,21 @@
+<ion-view title="Friend's Favorites">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-icon">Remove</button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+
+      <div class="item item-avatar">
+          <img ng-src="{{item.imageFile.url || 'img/person.png'}}">
+          <b>{{item.first}} {{item.last}}</b>
+          <p>{{item.updatedAt}}</p>
+      </div>
+
+      <a ng-href="#/app/favorite/{{item.objectId}}"><button class="button button-positive button-block">Favorite Businesses</button></a>
+      <a ng-href="#/app/message/per-{{chat()}}"><button class="button button-positive button-block">Direct Chat</button></a>
+
+      <p>{{item_ | json}}</p>
+  </ion-content>
+</ion-view>

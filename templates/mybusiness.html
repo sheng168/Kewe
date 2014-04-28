@@ -1,0 +1,53 @@
+<ion-view title="My Business">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+  <ion-content has-header="true" has-tabs="true" padding="true">
+    <form ng-submit="save()">
+      <div class="list">
+        <!--
+        -->
+        <div class="item item-avatar">
+          <img ng-src="{{item.imageFile.url || 'img/business.png'}}">
+          <b>{{item.name}}</b>
+          <p>{{item.objectId}}</p>
+        </div>
+
+        <label class="item item-input">
+          <input type="text" placeholder="Business Name" ng-model="item.name">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Publish Phone" ng-model="item.publicPhone">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Phone" ng-model="item.phone">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Address" ng-model="item.address">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Address" ng-model="item.city">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Address" ng-model="item.state">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Address" ng-model="item.zip_code">
+        </label>
+        <!--<label class="item item-input">-->
+          <!--<input type="password" placeholder="Password" ng-model="loginData.password">-->
+        <!--</label>-->
+
+        <ion-toggle ng-model="item.auto_approve">Automatically Approve</ion-toggle>
+        <ion-toggle ng-model="item.unlisted">Unlist</ion-toggle>
+
+        <button class="button button-block button-positive" type="submit">Save</button>
+
+        <div style="text-align: center">
+            {{item}}
+          Or <a href="#/signup">Create an account</a>
+        </div>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

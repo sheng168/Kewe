@@ -1,0 +1,62 @@
+<ion-side-menus>
+
+  <ion-pane ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+  </ion-pane>
+
+  <ion-side-menu side="left">
+    <header class="bar bar-header bar-stable">
+      <h1 class="title">Menu</h1>
+    </header>
+    <ion-content class="has-header">
+      <ion-list>
+        <ion-item nav-clear menu-close href="#/app/business">
+          Local Businesses <img height="32" width="32" src="img/ionic.png">
+        </ion-item>
+
+        <ion-item ng-hide="isSignedIn()" nav-clear menu-close href="#/app/login">
+          Login
+        </ion-item>
+        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/favorite/_my_">
+          Favorite Businesses
+        </ion-item>
+        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/friend">
+          Friends
+        </ion-item>
+        <ion-item ng-show="user" nav-clear menu-close href="#/app/search">
+          Profile
+        </ion-item>
+        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/mybusiness">
+          My Business
+        </ion-item>
+        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/customer/_my_">
+          My Customers
+        </ion-item>
+
+        <ion-item class="item  item-icon-left" ng-show="isSignedIn()" nav-clear menu-close href="#/app/message/all-global">
+          <!--<div class="item item-icon-left">-->
+          <i class="icon ion-email"></i>
+          Messages
+          <!--</div>-->
+        </ion-item>
+
+          <ion-item ng-show="isSignedIn()" ng-click="logout()" nav-clear menu-close href="#/app/logout">
+              Logout
+          </ion-item>
+
+          <!--<ion-item nav-clear menu-close href="#/app/search">-->
+          <!----->
+        <!--</ion-item>-->
+        <!--<ion-item nav-clear menu-close href="#/app/browse">-->
+          <!--Browse-->
+        <!--</ion-item>-->
+        <!--<ion-item nav-clear menu-close href="#/app/playlists">-->
+          <!--Playlists-->
+        <!--</ion-item>-->
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
