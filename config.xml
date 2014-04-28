@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
     <widget xmlns = "http://www.w3.org/ns/widgets" 
         xmlns:gap = "http://phonegap.com/ns/1.0"
-		id = "com.voved.tipfree"
+		id = "com.voved.repher"
 		version = "1.0"
 		versionCode = "1">
 
-    <name>Tip Calculator</name>
+    <name>Repher</name>
 
     <description>
         Tip Calculator
