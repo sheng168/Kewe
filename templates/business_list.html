@@ -7,10 +7,10 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
     <ion-list>
-      <ion-item class="item item-avatar" ng-repeat="item in business_list | orderByPriority | filter:isActive | orderBy:'name':false" href="#/app/business/{{item.objectId}}/{{item.owner.objectId}}">
+      <ion-item class="item item-avatar" ng-repeat="item in business_list | orderByPriority | filter:isActive | orderBy:'name':false"
+                href="#/app/business/{{item.objectId}}/{{item.owner.objectId}}">
           <img ng-src="{{item.imageFile.url || 'img/business.png'}}">
-        <h3>
-            {{item.name}} </h3>
+        <h3>{{item.name}} <b ng-show="isFavorite(item.objectId)">+</b></h3>
         <p>@{{item.city}}, {{item.state}} ({{distance(item.location) | number:1}}km)</p>
       </ion-item>
     </ion-list>

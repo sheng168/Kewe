@@ -7,11 +7,10 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
     <ion-list>
-      <ion-item class="item item-avatar" ng-repeat="item in items | orderByPriority | orderBy:'name'" href="#/app/person/{{item.objectId}}">
-        <img ng-src="{{item.imageFile.url || 'img/person.png'}}">
-        <h3>
-            {{item.first}} {{item.last}}</h3>
-        <p>{{item.createdAt}}</p>
+      <ion-item class="item item-avatar" ng-repeat="item in items | orderByPriority | orderBy:'name'" href="#/app/person/{{item.customer.objectId}}">
+        <img ng-src="{{item.customer.imageFile.url || 'img/person.png'}}">
+        <h3>{{item.customer.first}} {{item.customer.last}}</h3>
+        <p ng-show="item.inviter.objectId">Referred by {{items[item.inviter.objectId].customer.name}} {{item_|json}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

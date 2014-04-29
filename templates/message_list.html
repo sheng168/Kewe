@@ -20,12 +20,12 @@
 
     <form ng-submit="send()">
     <ion-footer-bar align-title="left" class="bar-calm">
-        <div class="buttons">
+        <div ng-show="false" class="buttons">
             <input ng-model="input.author" type="text" placeholder="Author">
         </div>
 
             <input ng-model="input.message" type="text" placeholder="Enter message">
-            <div class="buttons">
+            <div ng-hide="false" class="buttons">
                 <button class="button">Send</button>
             </div>
 

@@ -21,8 +21,8 @@
         <button class="button button-positive button-block">Call {{item.phone}}</button>
       </a>
       <a ng-href="#/app/customer/{{item.objectId}}"><button class="button button-positive button-block">Connected Friends</button></a>
-      <button ng-hide="isConnect()" ng-click="connect()" class="button button-positive button-block">Connect</button>
-      <button ng-show="isConnect()" ng-click="refer()" class="button button-positive button-block">Refer</button>
+      <button ng-hide="isFavorite()" ng-click="connect()" class="button button-positive button-block">Connect</button>
+      <button ng-show="isFavorite()" ng-click="refer()" class="button button-positive button-block">Refer</button>
 
       <pre>item: {{item|json}}</pre>
       <pre>owner: {{owner|json}}</pre>

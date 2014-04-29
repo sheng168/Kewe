@@ -1,4 +1,4 @@
-angular.module('starter.controllers', ['firebase'])
+angular.module('starter.controllers', ['firebase', 'UserService'])
 
 .controller('AppCtrl', function($scope) {
     $scope.user = undefined;
@@ -91,7 +91,7 @@ angular.module('starter.controllers', ['firebase'])
     };
   })
 
-.controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal) {
+.controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal, UserService) {
     var ref = new Firebase(fireUrl).child('class/Business');
 
 //    var join = Firebase.util.join(
@@ -175,6 +175,9 @@ angular.module('starter.controllers', ['firebase'])
         return getDistanceFromLatLonInKm(coords.latitude, coords.longitude, me.latitude, me.longitude)
       } else
         return 8888;
+    };
+    $scope.isFavorite = function(busId) {
+      return UserService.isFavorite(busId);
     };
 })
 .controller('FavoriteListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams) {
@@ -296,7 +299,9 @@ angular.module('starter.controllers', ['firebase'])
         if (snap.val() === null) {
 
         } else {
-          $scope.items[snap.name()] = snap.val();
+          val.customer = snap.val();
+
+          $scope.items[snap.name()] = val;
           $scope.$apply();
         }
       })
@@ -321,7 +326,7 @@ angular.module('starter.controllers', ['firebase'])
 
 })
 
-.controller('BusinessCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth) {
+.controller('BusinessCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, UserService) {
     var root = new Firebase(fireUrl);
     var busId = $stateParams.id;
     var ref = root.child('class/Business').child(busId);
@@ -335,9 +340,10 @@ angular.module('starter.controllers', ['firebase'])
     var personId = '_';
     if (Auth.user()) {
       personId = Auth.user().get('person').id;
+      UserService.setCurrentUser(personId);
     }
 
-    $scope.busCust = $firebase(root.child('index/CustomerBusiness').child(personId));
+//    $scope.busCust = $firebase(root.child('index/CustomerBusiness').child(personId));
 
     $scope.connect = function() {
       Parse.Cloud.run('DoConnect', {business:busId, customer:personId}, {
@@ -353,10 +359,9 @@ angular.module('starter.controllers', ['firebase'])
       });
     }
 
-    $scope.isConnect = function() {
-      return false;
-    }
-
+    $scope.isFavorite = function() {
+      return UserService.isFavorite(busId);
+    };
 
 })
 
