@@ -13,85 +13,46 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
 })
 
+  .controller('BusinessCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, UserService) {
+    var root = new Firebase(fireUrl);
+    var busId = $stateParams.id;
+    var ref = root.child('class/Business').child(busId);
 
-.controller('LoginCtrl', function($scope, Auth, $state, $ionicLoading) {
-//    if (Auth.isSignedIn()) {
-//      name = Auth.userId();
-//    }
+    var bus = $firebase(ref);
+    $scope.item = bus;
 
-    $scope.loginData = {
-      email:'',
-      password:''
-    };
+    var ownerId = $stateParams.ownerId;
+    $scope.owner = $firebase(root.child('class/Person').child(ownerId));
 
-    $scope.tryLogin = function() {
-      $scope.message = 'trying to login';
-      var loading = $ionicLoading.show({content:'Loading'});
-
-      Auth.login($scope.loginData).then(function(user) {
-        loading.hide();
-
-        // The root scope event will trigger and navigate
-        console.log('login success', user);
-        $state.go('app.business_list');
-      }, function(error) {
-        // Show a form error here
-        $scope.message = error.message;
-        $scope.$apply();
-        loading.hide();
-
-        console.error('Unable to login', error);
-      });
-    };
-  })
-
-.controller('MessageListCtrl', function($scope, $firebase, fireUrl, $timeout, $ionicScrollDelegate, Auth, $stateParams) {
-    var roomId = $stateParams.roomId;
-    var userid = Auth.userId();
-    if (!userid) {
-      userid = 'user' + Math.round(Math.random()*999);
-    } else {
-      var author = Auth.user().get('username');
-      $scope.input = {author: author};
+    var personId = '_';
+    if (Auth.user()) {
+      personId = Auth.user().get('person').id;
+      UserService.setCurrentUser(personId);
     }
 
-    var root = new Firebase(fireUrl);
-    var ref = root.child('public/chat').child(roomId).child('messages');
+//    $scope.busCust = $firebase(root.child('index/CustomerBusiness').child(personId));
 
-    $scope.items = $firebase(ref.limit(50));
-    var comp = ref.parent().child('compose');
-    $scope.composes = $firebase(comp);
-    $scope.server = $firebase(root.child('.info'));
-
-    var my = comp.child(userid);
-    my.onDisconnect().remove();
-    $firebase(my).$bind($scope, 'input');
-
-    var scroll = function () {
-      $ionicScrollDelegate.resize();
-      $timeout(function () {
-        $ionicScrollDelegate.scrollBottom(true);
-      }, 1);
-    };
-
-    $scope.composes.$on('change', scroll);
-    $scope.items.$on('change', scroll);
-
-    $scope.send = function(value) {
-      $scope.items.$add({
-        author: $scope.input.author,
-        message: $scope.input.message
+    $scope.connect = function() {
+      Parse.Cloud.run('DoConnect', {business:busId, customer:personId}, {
+        success: function(result) {
+          // result is 'Hello world!'
+          console.log('connect bus', result);
+//          $scope.modal.hide()
+        },
+        error: function(error) {
+          console.log(error);
+          alert('error: ' + error);
+        }
       });
-      $scope.input.message = '';
+    }
+
+    $scope.isFavorite = function() {
+      return UserService.isFavorite(busId);
     };
 
-
-    $scope.mine = function(item) {
-      return item.author === $scope.input.author;
-    };
   })
 
-.controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal, UserService) {
+  .controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal, UserService) {
     var ref = new Firebase(fireUrl).child('class/Business');
 
 //    var join = Firebase.util.join(
@@ -179,8 +140,43 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.isFavorite = function(busId) {
       return UserService.isFavorite(busId);
     };
-})
-.controller('FavoriteListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams) {
+  })
+
+  .controller('CustomerListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams) {
+    var uid = $stateParams.businessId;
+    if (uid === '_my_' || uid == '') {
+      uid = Auth.user().get('business').id;
+    }
+
+    var refDetail = new Firebase(fireUrl).child('class/Person');
+    var refIndex = new Firebase(fireUrl).child('index/BusinessCustomer').child(uid);
+
+    $scope.items = {}
+
+    console.log(refIndex.toString());
+
+    refIndex.on('child_added', function(data){
+      console.log(data.name());
+      var val = data.val();
+      refDetail.child(val.customer.objectId).on('value', function(snap){
+        console.log(snap.ref().toString(), snap.val())
+        if (snap.val() === null) {
+
+        } else {
+          val.customer = snap.val();
+
+          $scope.items[snap.name()] = val;
+          $scope.$apply();
+        }
+      })
+    })
+
+    $scope.filter = function(value) {
+      return value.active;
+    };
+  })
+
+  .controller('FavoriteListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams) {
     var ref = new Firebase(fireUrl).child('class/Business');
     var refFav = new Firebase(fireUrl).child('index/CustomerBusiness');
 
@@ -219,8 +215,9 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.filter = function(value) {
       return value.active;
     };
-})
-.controller('FriendListCtrl', function($scope, $firebase, fireUrl, Auth, $ionicModal) {
+  })
+
+  .controller('FriendListCtrl', function($scope, $firebase, fireUrl, Auth, $ionicModal) {
     $ionicModal.fromTemplateUrl('modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -276,41 +273,86 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.filter = function(value) {
       return value.active;
     };
-})
+  })
 
-.controller('CustomerListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams) {
-    var uid = $stateParams.businessId;
-    if (uid === '_my_' || uid == '') {
-      uid = Auth.user().get('business').id;
+.controller('LoginCtrl', function($scope, Auth, $state, $ionicLoading) {
+//    if (Auth.isSignedIn()) {
+//      name = Auth.userId();
+//    }
+
+    $scope.loginData = {
+      email:'',
+      password:''
+    };
+
+    $scope.tryLogin = function() {
+      $scope.message = 'trying to login';
+      var loading = $ionicLoading.show({content:'Loading'});
+
+      Auth.login($scope.loginData).then(function(user) {
+        loading.hide();
+
+        // The root scope event will trigger and navigate
+        console.log('login success', user);
+        $state.go('app.business_list');
+      }, function(error) {
+        // Show a form error here
+        $scope.message = error.message;
+        $scope.$apply();
+        loading.hide();
+
+        console.error('Unable to login', error);
+      });
+    };
+  })
+
+.controller('MessageListCtrl', function($scope, $firebase, fireUrl, $timeout, $ionicScrollDelegate, Auth, $stateParams) {
+    var roomId = $stateParams.roomId;
+    var userid = Auth.userId();
+    if (!userid) {
+      userid = 'user' + Math.round(Math.random()*999);
+    } else {
+      var author = Auth.user().get('username');
+      $scope.input = {author: author};
     }
 
-    var refDetail = new Firebase(fireUrl).child('class/Person');
-    var refIndex = new Firebase(fireUrl).child('index/BusinessCustomer').child(uid);
+    var root = new Firebase(fireUrl);
+    var ref = root.child('public/chat').child(roomId).child('messages');
 
-    $scope.items = {}
+    $scope.items = $firebase(ref.limit(50));
+    var comp = ref.parent().child('compose');
+    $scope.composes = $firebase(comp);
+    $scope.server = $firebase(root.child('.info'));
 
-    console.log(refIndex.toString());
+    var my = comp.child(userid);
+    my.onDisconnect().remove();
+    $firebase(my).$bind($scope, 'input');
 
-    refIndex.on('child_added', function(data){
-      console.log(data.name());
-      var val = data.val();
-      refDetail.child(val.customer.objectId).on('value', function(snap){
-        console.log(snap.ref().toString(), snap.val())
-        if (snap.val() === null) {
-
-        } else {
-          val.customer = snap.val();
-
-          $scope.items[snap.name()] = val;
-          $scope.$apply();
-        }
-      })
-    })
-
-    $scope.filter = function(value) {
-      return value.active;
+    var scroll = function () {
+      $ionicScrollDelegate.resize();
+      $timeout(function () {
+        $ionicScrollDelegate.scrollBottom(true);
+      }, 1);
     };
-})
+
+    $scope.composes.$on('change', scroll);
+    $scope.items.$on('change', scroll);
+
+    $scope.send = function(value) {
+      $scope.items.$add({
+        author: $scope.input.author,
+        message: $scope.input.message
+      });
+      $scope.input.message = '';
+    };
+
+
+    $scope.mine = function(item) {
+      return item.author === $scope.input.author;
+    };
+  })
+
+
 .controller('MyBusinessCtrl', function($scope, $firebase, fireUrl, Auth) {
     var id = Auth.user().get('business').id;
 
@@ -323,45 +365,6 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.save = function(){
       $scope.item.$save();
     }
-
-})
-
-.controller('BusinessCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, UserService) {
-    var root = new Firebase(fireUrl);
-    var busId = $stateParams.id;
-    var ref = root.child('class/Business').child(busId);
-
-    var bus = $firebase(ref);
-    $scope.item = bus;
-
-    var ownerId = $stateParams.ownerId;
-    $scope.owner = $firebase(root.child('class/Person').child(ownerId));
-
-    var personId = '_';
-    if (Auth.user()) {
-      personId = Auth.user().get('person').id;
-      UserService.setCurrentUser(personId);
-    }
-
-//    $scope.busCust = $firebase(root.child('index/CustomerBusiness').child(personId));
-
-    $scope.connect = function() {
-      Parse.Cloud.run('DoConnect', {business:busId, customer:personId}, {
-        success: function(result) {
-          // result is 'Hello world!'
-          console.log('connect bus', result);
-//          $scope.modal.hide()
-        },
-        error: function(error) {
-          console.log(error);
-          alert('error: ' + error);
-        }
-      });
-    }
-
-    $scope.isFavorite = function() {
-      return UserService.isFavorite(busId);
-    };
 
 })
 
@@ -385,7 +388,10 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     }
 })
 
-.controller('PlaylistsCtrl', function($scope) {
+  //////////////
+
+
+  .controller('PlaylistsCtrl', function($scope) {
   $scope.playlists = [
     { title: 'Reggae', id: 1 },
     { title: 'Chill', id: 2 },
