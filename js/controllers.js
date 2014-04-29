@@ -77,7 +77,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.business_list = $firebase(ref);
 
     $scope.isActive = function(value) {
-      console.log('isActive', value);
+      //console.log('isActive', value);
       return value.active && value.name != '';
     };
 
