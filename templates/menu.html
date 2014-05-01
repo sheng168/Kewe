@@ -14,7 +14,7 @@
     <ion-content class="has-header">
       <ion-list>
         <ion-item nav-clear menu-close href="#/app/business">
-          Local Businesses <img height="32" width="32" src="img/ionic.png">
+          Local Businesses
         </ion-item>
 
         <ion-item ng-hide="isSignedIn()" nav-clear menu-close href="#/app/login">
@@ -23,8 +23,10 @@
         <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/favorite/_my_">
           Favorite Businesses
         </ion-item>
-        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/friend">
-          Friends
+        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/friend" class="item item-icon-left">
+            <i class="icon ion-person-stalker"></i>
+            Friends
+            <span class="badge badge-assertive">0</span>
         </ion-item>
         <ion-item ng-show="user" nav-clear menu-close href="#/app/search">
           Profile
@@ -38,13 +40,18 @@
 
         <ion-item class="item  item-icon-left" ng-show="isSignedIn()" nav-clear menu-close href="#/app/message/all-global">
           <!--<div class="item item-icon-left">-->
-          <i class="icon ion-email"></i>
+          <i class="icon ion-chatbubble-working"></i>
           Messages
+            <span class="badge badge-assertive">0</span>
           <!--</div>-->
         </ion-item>
 
           <ion-item ng-show="isSignedIn()" ng-click="logout()" nav-clear menu-close href="#/app/logout">
               Logout
+          </ion-item>
+
+          <ion-item nav-clear menu-close href="#/app/intro">
+              Intro
           </ion-item>
 
           <!--<ion-item nav-clear menu-close href="#/app/search">-->

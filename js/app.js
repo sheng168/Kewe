@@ -29,6 +29,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ParseAuth'])
       controller: 'AppCtrl'
     })
 
+    .state('app.intro', {
+      url: "/intro",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/intro.html",
+          controller: 'IntroCtrl'
+        }
+      }
+    })
+
     .state('app.login', {
       url: "/login",
       views: {
