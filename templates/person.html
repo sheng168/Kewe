@@ -15,6 +15,7 @@
 
       <a ng-href="#/app/favorite/{{item.objectId}}"><button class="button button-positive button-block">Favorite Businesses</button></a>
       <a ng-href="#/app/message/per-{{chat()}}"><button class="button button-positive button-block">Direct Chat</button></a>
+      <button ng-show="businessIdToRefer" ng-click="refer()" class="button button-positive button-block">Refer to {{businessIdToRefer}}</button>
 
       <p>{{item_ | json}}</p>
   </ion-content>

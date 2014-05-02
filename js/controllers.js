@@ -13,7 +13,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
 })
 
-  .controller('BusinessCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, UserService) {
+  .controller('BusinessCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, UserService, $state, $rootScope) {
     var root = new Firebase(fireUrl);
     var busId = $stateParams.id;
     var ref = root.child('class/Business').child(busId);
@@ -44,6 +44,12 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
           alert('error: ' + error);
         }
       });
+    }
+
+    $scope.refer = function() {
+      alert('Select a friend to refer to.');
+      $rootScope.businessIdToRefer = busId;
+      $state.go('app.friend_list');
     }
 
     $scope.isFavorite = function() {
@@ -387,7 +393,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
 })
 
-.controller('PersonCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth) {
+.controller('PersonCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, $rootScope) {
     var id1 = Auth.user().get('person').id;
     var id2 = $stateParams.id;
 
@@ -405,7 +411,48 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.chat = function() {
       return id1 + '-' + id2;
     }
-})
+
+    $scope.refer = function() {
+      alert('Refer ' + $rootScope.businessIdToRefer + ' to ' + id2);
+
+      var busCust = {
+        "a_inviterName" : "",
+        "updatedAt" : "2013-10-17T09:37:20.155Z",
+        "customerAccept" : true,
+        "inviter" : {
+          "className" : "Person",
+          "objectId" : id1,
+          "__type" : "Pointer"
+        },
+        "a_businessName" : "",
+        "objectId" : "-",
+        "businessAccept" : false,
+        "a_customerName" : "",
+        "customer" : {
+          "className" : "Person",
+          "objectId" : id2,
+          "__type" : "Pointer"
+        },
+        "createdAt" : "2013-10-16T18:34:25.683Z",
+        "business" : {
+          "className" : "Business",
+          "objectId" : $rootScope.businessIdToRefer,
+          "__type" : "Pointer"
+        }
+      };
+
+      root.child('class/BusinessCustomer').push(busCust, function(error) {
+        if (error) {
+          alert('Data could not be saved.' + error);
+        } else {
+          alert('Data saved successfully.');
+        }
+      });
+
+      $rootScope.businessIdToRefer = '';
+    }
+
+  })
 
   //////////////
 
