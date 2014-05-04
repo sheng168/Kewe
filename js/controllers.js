@@ -87,6 +87,14 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       return value.active && value.name != '';
     };
 
+    $scope.image = function(item) {
+      var n = 'B';
+      if (item.name && item.name.length > 1) {
+        n = item.name.substr(0,2);
+      }
+      return 'http://placehold.it/32/2222ff/ffffff&text=' + n;
+    }
+
     $scope.invite = {};
 
     $scope.doInvite = function(){
@@ -310,6 +318,28 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       password:''
     };
 
+    $scope.signUp = function() {
+//      alert('signUp')
+
+      Auth.register({
+        email: Math.random() + '@voved.com' ,
+        password: 'p' + Math.random()
+      }).then(function(user) {
+//        loading.hide();
+
+        // The root scope event will trigger and navigate
+        console.log('login success', user);
+        $state.go('app.mybusiness');
+      }, function(error) {
+        // Show a form error here
+        $scope.message = error.message;
+        $scope.$apply();
+//        loading.hide();
+
+        console.error('Unable to login', error);
+      });
+    }
+
     $scope.tryLogin = function() {
       $scope.message = 'trying to login';
       var loading = $ionicLoading.show({content:'Loading'});
@@ -388,8 +418,26 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.item = bus;
 
     $scope.save = function(){
-      $scope.item.$save();
+      var bus = $scope.item;
+
+      if (bus.name && bus.name.length > 0) {
+        bus.active = true;
+      }
+
+      bus.owner = {
+        objectId: Auth.user().get('person').id
+      }
+
+      bus.$save();
     }
+
+    $scope.person = $firebase(root.child('class/Person').child(Auth.user().get('person').id));
+
+    $scope.user = {
+      phone: Auth.user().get('username'),
+      email: Auth.user().get('email'),
+      owner: Auth.user().get('business').id != ''
+    };
 
 })
 
