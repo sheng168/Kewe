@@ -433,13 +433,39 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
     $scope.person = $firebase(root.child('class/Person').child(Auth.user().get('person').id));
 
+    var phone = Auth.user().get('username');
+    var email = Auth.user().get('email');
+    if (phone.indexOf('0.') == 0) {
+      phone = '';
+    }
+    if (email.indexOf('0.') == 0) {
+      email = '';
+    }
+
     $scope.user = {
-      phone: Auth.user().get('username'),
-      email: Auth.user().get('email'),
+      phone: phone,
+      email: email,
       owner: Auth.user().get('business').id != ''
     };
 
-})
+    $scope.saveProfile = function(){
+      $scope.person.$save();
+
+      var parse = Auth.user();
+
+      if ($scope.user.phone) parse.set('username', $scope.user.phone);
+      if ($scope.user.email) parse.set('email', $scope.user.email);
+
+      parse.save().then(function(obj) {
+        // the object was saved successfully.
+        alert('save successfull')
+      }, function(error) {
+        // the save failed.
+        console.log(error)
+        alert('save failed ' + error.message)
+      });
+    }
+  })
 
 .controller('PersonCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, $rootScope) {
     var id1 = Auth.user().get('person').id;

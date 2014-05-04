@@ -7,7 +7,7 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
     <ion-list>
-      <ion-item class="item item-avatar" ng-repeat="item in business_list | orderByPriority | filter:isActive | orderBy:'name':false"
+      <ion-item class="item item-avatar" ng-repeat="item in business_list | orderByPriority | orderBy:'name':false"
                 href="#/app/business/{{item.objectId}}/{{item.owner.objectId}}">
           <img ng-src="{{item.imageFile.url || image(item)}}">
         <h3>{{item.name}} <b ng-show="isFavorite(item.objectId)">+</b></h3>
