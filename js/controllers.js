@@ -59,7 +59,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
   })
 
   .controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal, UserService) {
-    var ref = new Firebase(fireUrl).child('class/Business');
+    var ref = new Firebase(fireUrl).child('public/Business');
 
 //    var join = Firebase.util.join(
 //      ref, {
