@@ -1,0 +1,219 @@
+@charset "UTF-8";
+/* Simple fluid media
+   Note: Fluid media requires that you remove the media's height and width attributes from the HTML
+   http://www.alistapart.com/articles/fluid-images/ 
+*/
+img, object, embed, video {
+	max-width: 100%;
+}
+/* IE 6 does not support max-width so default to width 100% */
+.ie6 img {
+	width:100%;
+}
+
+/*
+	Dreamweaver Fluid Grid Properties
+	----------------------------------
+	dw-num-cols-mobile:		5;
+	dw-num-cols-tablet:		8;
+	dw-num-cols-desktop:	10;
+	dw-gutter-percentage:	25;
+	
+	Inspiration from "Responsive Web Design" by Ethan Marcotte 
+	http://www.alistapart.com/articles/responsive-web-design
+	
+	and Golden Grid System by Joni Korpi
+	http://goldengridsystem.com/
+*/
+
+/* Mobile Layout: 480px and below. */
+
+.gridContainer {
+	margin-left: auto;
+	margin-right: auto;
+	width: 87.36%;
+	padding-left: 1.82%;
+	padding-right: 1.82%;
+}
+#LayoutDiv1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+.item-avatar-pk, .item-avatar .item-content {
+	padding-left: 70px;
+	min-height: 70px;
+	background-image: url(img/back_cell_white_80h@2x.png);
+	background-repeat: repeat-x;
+}
+  
+.item-avatar-pk > img:first-child, .item-avatar .item-image, .item-avatar .item-content > img:first-child, .item-avatar .item-content .item-image {
+	position: absolute;
+	top: 15px;
+	left: 15px;
+	max-width: 40px;
+	max-height: 40px;
+	width: 100%;
+	border-radius: 0px;
+}
+
+.list-pk {
+	position: relative;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 0;
+	margin-bottom: 10px;
+	background-image: url(img/back_cell_white_80h@2x.png);
+	background-repeat: repeat-x;
+	background-position: center;
+	background-size: auto;
+}
+
+.list-pk:last-child {
+  margin-bottom: 0px; }
+  
+.bar.bar-repher {
+    border-color: #1aacc3;
+    background-color: #49bbb7;
+    background-image: linear-gradient(0deg, #1aacc3, #1aacc3 50%, transparent 50%);
+    color: #fff; }
+.bar.bar-repher .title {
+      color: #fff; }
+	  
+.header-logo-pk {
+	max-height: 80%;	
+	}
+.title-image {
+    margin-top: 8px;
+    height: 27px;
+}
+.side-image-pk {
+    margin-top: 8px;
+    height: 42px;
+}
+
+.side-header-pk {
+	height: 60px;
+	}
+
+.topright-image {
+	margin-top: 3px;
+	height: 30px;
+	margin-right: 10px;
+}
+  .button.button-icon-pk {
+	border-color: #CCCCCC;
+	color: #666666;
+	background-image: url(img/back_cell_white_70h@2x%20copy.png);
+	background-repeat: repeat;
+	text-align: left;
+	padding-left: 15px;
+}
+    .button.button-icon-pk:hover {
+      color: #333333;
+      text-decoration: none; }
+    .button.button-icon-pk.active {
+	border-color: #CCCCCC;
+	background-color: #FFFFFF;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+}
+    .button.button-icon-pk.button-clear {
+	border-color: transparent;
+	background: none;
+	box-shadow: 0px 0px #999;
+	color: #CCCCCC;
+}
+    .button.button-icon-pk.button-icon {
+      border-color: transparent;
+      background: none; }
+    .button.button-icon-pk.button-outline {
+      border-color: #4a87ee;
+      background: transparent;
+      color: #4a87ee; }
+      .button.button-icon-pk.button-outline.active {
+        background-color: #4a87ee;
+        box-shadow: none;
+        color: #fff; }
+		
+  .button.button-side-pk {
+	border-color: #333333;
+	color: #CCCCCC;
+	background-image: url(img/back_cell_gray_70h@2x.png);
+	background-repeat: repeat;
+	text-align: left;
+	padding-left: 15px;
+}
+    .button.button-side-pk:hover {
+      color: #333333;
+      text-decoration: none; }
+    .button.button-side-pk.active {
+	border-color: #333333;
+	background-color: #FFFFFF;
+	box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.15);
+}
+    .button.button-side-pk.button-clear {
+	border-color: transparent;
+	background: none;
+	box-shadow: 0px 0px #999;
+	color: #CCCCCC;
+}
+    .button.button-side-pk.button-icon {
+      border-color: transparent;
+      background: none; }
+    .button.button-side-pk.button-outline {
+	border-color: #000000;
+	background: transparent;
+	color: #4a87ee;
+}
+      .button.button-side-pk.button-outline.active {
+        background-color: #4a87ee;
+        box-shadow: none;
+        color: #fff; }
+
+		
+.icon-pk {
+	margin-top: 3px;
+	height: 36px;
+	padding-right: 5px;
+	float: right;
+	}
+	
+
+/* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
+
+@media only screen and (min-width: 481px) {
+.gridContainer {
+	width: 90.675%;
+	padding-left: 1.1625%;
+	padding-right: 1.1625%;
+}
+#LayoutDiv1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+}
+
+/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
+
+@media only screen and (min-width: 769px) {
+.gridContainer {
+	width: 88.2%;
+	max-width: 1232px;
+	padding-left: 0.9%;
+	padding-right: 0.9%;
+	margin: auto;
+}
+#LayoutDiv1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+}
