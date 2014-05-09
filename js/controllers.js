@@ -435,10 +435,10 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
     var phone = Auth.user().get('username');
     var email = Auth.user().get('email');
-    if (phone.indexOf('0.') == 0) {
+    if (phone && phone.indexOf('0.') == 0) {
       phone = '';
     }
-    if (email.indexOf('0.') == 0) {
+    if (email && email.indexOf('0.') == 0) {
       email = '';
     }
 
