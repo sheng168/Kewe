@@ -25,8 +25,8 @@
       <button ng-hide="isFavorite()" ng-click="connect()" class="button button-positive button-block">Connect</button>
       <button ng-show="isFavorite()" ng-click="refer()" class="button button-positive button-block">Refer</button>
 
-      <pre>item: {{item|json}}</pre>
-      <pre>owner: {{owner|json}}</pre>
-      <pre>busCust: {{busCust|json}}</pre>
+      <pre ng-show="debug">item: {{item|json}}</pre>
+      <pre ng-show="debug">owner: {{owner|json}}</pre>
+      <pre ng-show="debug">busCust: {{busCust|json}}</pre>
   </ion-content>
 </ion-view>
