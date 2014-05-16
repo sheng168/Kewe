@@ -92,7 +92,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       if (item.name && item.name.length > 1) {
         n = item.name.substr(0,2);
       }
-      return 'http://placehold.it/32/2222ff/ffffff&text=' + n;
+      return 'http://placehold.it/64/2222ff/ffffff&text=' + n;
     }
 
     $scope.invite = {};
