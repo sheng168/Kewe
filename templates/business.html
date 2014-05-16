@@ -17,16 +17,20 @@
       <p>{{item.location.latitude|number:3}},{{item.location.longitude|number:3}}</p>
       <!--<p>Phone: <a href="tel://{{item.phone}}">Call {{item.phone}}</a></p>-->
 
-      <a ng-href="#/app/message/bus-{{item.objectId}}"><button class="button button-positive button-block">Chat Forum</button></a>
+      <a ng-href="#/app/message/bus-{{item.objectId}}"><button class="button button-pk1">
+          <img class="icon-pk" src="img/ic_chat@2x.png">Chat Forum</button></a>
       <a href="tel://{{item.phone}}">
-        <button class="button button-positive button-block">Call {{item.phone}}</button>
+          <button class="button button-pk1">
+              <img class="icon-pk" src="img/ic_phone@2x.png">Call</button>
       </a>
-      <a ng-href="#/app/customer/{{item.objectId}}"><button class="button button-positive button-block">Connected Friends</button></a>
-      <button ng-hide="isFavorite()" ng-click="connect()" class="button button-positive button-block">Connect</button>
-      <button ng-show="isFavorite()" ng-click="refer()" class="button button-positive button-block">Refer</button>
+      <a ng-href="#/app/customer/{{item.objectId}}"><button class="button button-pk1">
+          <img class="icon-pk" src="img/ic_friends@2x.png">Connected Friends</button></a>
+      <button ng-hide="isFavorite()" ng-click="connect()" class="button button-pk1"><img class="icon-pk" src="img/ic_connect@2x.png">Connect</button>
+      <button ng-show="isFavorite()" ng-click="refer()" class="button button-pk1"><img class="icon-pk" src="img/ic_logosymbol@2x.png">Refer</button>
 
       <pre ng-show="debug">item: {{item|json}}</pre>
       <pre ng-show="debug">owner: {{owner|json}}</pre>
       <pre ng-show="debug">busCust: {{busCust|json}}</pre>
   </ion-content>
 </ion-view>
+
