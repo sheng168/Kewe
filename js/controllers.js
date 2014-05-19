@@ -468,7 +468,10 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
   })
 
 .controller('PersonCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, $rootScope) {
-    var id1 = Auth.user().get('person').id;
+    var id1 = '_';
+    if (Auth.user()) {
+      id1 = Auth.user().get('person').id;
+    }
     var id2 = $stateParams.id;
 
     var root = new Firebase(fireUrl);
