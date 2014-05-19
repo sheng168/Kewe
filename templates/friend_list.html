@@ -40,7 +40,7 @@
                     </label>
 
                     {{invite.error}}
-                    <button ng-show="invite.phone.length > 10 && invite.first" class="button button-full button-positive" ng-click="doInvite()">Invite</button>
+                    <button ng-disabled="invite.phone.length < 10 || !invite.first" class="button button-full button-positive" ng-click="doInvite()">Invite</button>
                 </div>
             </div>
         </ion-content>
