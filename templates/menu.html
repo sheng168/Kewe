@@ -1,5 +1,4 @@
 <ion-side-menus>
-
   <ion-pane ion-side-menu-content>
     <ion-nav-bar class="bar-stable">
       <ion-nav-back-button class="button-clear"><i class="icon ion-chevron-left"></i> Back</ion-nav-back-button>
@@ -7,63 +6,43 @@
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-pane>
 
-  <ion-side-menu side="left">
-    <header class="bar bar-header bar-stable">
-      <h1 class="title">Re.pher</h1>
-    </header>
-    <ion-content class="has-header">
-      <ion-list>
-        <ion-item nav-clear menu-close href="#/app/business">
-          Local Businesses
-        </ion-item>
-
-        <ion-item ng-hide="isSignedIn()" nav-clear menu-close href="#/app/login">
-          Login
-        </ion-item>
-        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/favorite/_my_">
-          Favorite Businesses
-        </ion-item>
-        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/friend" class="item item-icon-left">
-            <i class="icon ion-person-stalker"></i>
-            Friends
-            <span class="badge badge-assertive">0</span>
-        </ion-item>
-        <ion-item ng-show="user" nav-clear menu-close href="#/app/search">
-          Profile
-        </ion-item>
-        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/mybusiness">
-          My Business
-        </ion-item>
-        <ion-item ng-show="isSignedIn()" nav-clear menu-close href="#/app/customer/_my_">
-          My Customers
-        </ion-item>
-
-        <ion-item class="item  item-icon-left" ng-show="isSignedIn()" nav-clear menu-close href="#/app/message/all-global">
-          <!--<div class="item item-icon-left">-->
-          <i class="icon ion-chatbubble-working"></i>
-          Messages
-            <span class="badge badge-assertive">0</span>
-          <!--</div>-->
-        </ion-item>
-
-          <ion-item ng-show="isSignedIn()" ng-click="logout()" nav-clear menu-close href="#/app/logout">
-              Logout
-          </ion-item>
-
-          <ion-item nav-clear menu-close href="#/app/intro">
-              Intro
-          </ion-item>
-
-          <!--<ion-item nav-clear menu-close href="#/app/search">-->
-          <!----->
-        <!--</ion-item>-->
-        <!--<ion-item nav-clear menu-close href="#/app/browse">-->
-          <!--Browse-->
-        <!--</ion-item>-->
-        <!--<ion-item nav-clear menu-close href="#/app/playlists">-->
-          <!--Playlists-->
-        <!--</ion-item>-->
-      </ion-list>
-    </ion-content>
-  </ion-side-menu>
+    <ion-side-menu side="left">
+        <header class="bar bar-header bar-repher side-header-pk">
+            <h1 class="title"><img class="side-image-pk" src="img/ic_navi_repher_horiz@2x.png" /></h1>
+        </header>
+        <ion-content class="has-header">
+            <ul>
+                <li class="nav-clear menu-close">
+                    <a class="button button-full button-side-pk" href="#/app/business">Local Businesses<img class="icon-pk" src="img/ic_local_busi@2x.png"></a>
+                </li>
+                <li ng-hide="isSignedIn()" class="nav-clear menu-close" href="#/app/login">
+                    <a class="button button-full button-side-pk" href="#/app/login">Login<img class="icon-pk" src="img/ic_login@2x.png"></a>
+                </li>
+                <li ng-show="isSignedIn()" class="nav-clear menu-close">
+                    <a class="button button-full button-side-pk" href="#/app/favorite/_my_">Favorite Businesses<img class="icon-pk" src="img/ic_fav_busi@2x.png"></a>
+                </li>
+                <li ng-show="isSignedIn()" class="lear menu-close">
+                    <a class="button button-full button-side-pk" href="#/app/friend">Friends<img class="icon-pk" src="img/ic_friends@2x.png"></a>
+                </li>
+                <li ng-show="user" class="lear menu-close">
+                    <a class="button button-full button-side-pk" href="#/app/search">Profile<img class="icon-pk" src="img/ic_my_profile@2x.png"></a>
+                </li>
+                <li ng-show="isSignedIn()" class="lear menu-close">
+                    <a class="button button-full button-side-pk" href="#/app/mybusiness">My Business<img class="icon-pk" src="img/ic_my_busi@2x.png"></a>
+                </li>
+                <li ng-show="isSignedIn()" class="lear menu-close">
+                    <a class="button button-full button-side-pk" href="#/app/customer/_my_">My Customers<img class="icon-pk" src="img/ic_customer@2x.png"></a>
+                </li>
+                <li  ng-show="isSignedIn()" class="lear menu-close">
+                    <a class="button button-full button-side-pk" href="#/app/message/all-global">Messages <img class="icon-pk" src="img/ic_message@2x.png"></a>
+                </li>
+                <li ng-show="isSignedIn()" ng-click="logout()" class="lear menu-close">
+                    <a class="button button-full button-side-pk" href="#/app/logout">Logout<img class="icon-pk" src="img/ic_logout@2x.png"></a>
+                </li>
+                <li class="lear menu-close">
+                    <a class="button button-full button-side-pk" href="#/app/intro">Intro<img class="icon-pk" src="img/ic_logosymbol@2x.png"></a>
+                </li>
+            </ul>
+        </ion-content>
+    </ion-side-menu>
 </ion-side-menus>
