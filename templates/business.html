@@ -5,32 +5,35 @@
   <ion-nav-buttons side="right">
     <!--<button menu-toggle="left" class="button button-icon icon ion-heart"></button>-->
   </ion-nav-buttons>
+
   <ion-content class="has-header" padding="true">
-      <div class="item item-avatar">
-          <img ng-src="{{item.imageFile.url || 'img/business.png'}}">
+      <div class="item-avatar-pk-business">
+          <img class="image-left-pk" ng-src="{{item.imageFile.url || 'img/business.png'}}">
           <b>{{item.name}}</b>
           <p>{{owner.first}} {{owner.last}}</p>
       </div>
-
-      <p>{{item.address || 'Address Unknown'}}<br/>
+      <div class="spacer-pk"></div>
+      <p class="text-small-pk">{{item.address || 'Address Unknown'}}<br/>
           {{item.city}}, {{item.state}} {{item.zip_code}}</p>
-      <p>{{item.location.latitude|number:3}},{{item.location.longitude|number:3}}</p>
+      <p class="text-small-pk">{{item.location.latitude|number:3}},{{item.location.longitude|number:3}}</p>
       <!--<p>Phone: <a href="tel://{{item.phone}}">Call {{item.phone}}</a></p>-->
+      <div class="button-pk2">
+          <a ng-href="#/app/message/bus-{{item.objectId}}"><button class="button button-pk1">
+              <img class="icon-pk" src="img/ic_chat@2x.png">Chat</button>
+          </a>
+          <a href="tel://{{item.phone}}">
+              <button class="button button-pk1">
+                  <img class="icon-pk" src="img/ic_phone@2x.png">Call</button>
+          </a>
+          <a ng-href="#/app/customer/{{item.objectId}}"><button class="button button-pk1">
+              <img class="icon-pk" src="img/ic_friends@2x.png">Connected Friends</button></a>
+          <button ng-hide="isFavorite()" ng-click="connect()" class="button button-pk1">Add to favorite<img class="icon-pk" src="img/ic_connect@2x.png"></button>
+          <button ng-show="isFavorite()" ng-click="refer()" class="button button-pk1">Refer<img class="icon-pk" src="img/ic_logosymbol@2x.png"></button>
+      </div>
 
-      <a ng-href="#/app/message/bus-{{item.objectId}}"><button class="button button-pk1">
-          <img class="icon-pk" src="img/ic_chat@2x.png">Chat Forum</button></a>
-      <a href="tel://{{item.phone}}">
-          <button class="button button-pk1">
-              <img class="icon-pk" src="img/ic_phone@2x.png">Call</button>
-      </a>
-      <a ng-href="#/app/customer/{{item.objectId}}"><button class="button button-pk1">
-          <img class="icon-pk" src="img/ic_friends@2x.png">Connected Friends</button></a>
-      <button ng-hide="isFavorite()" ng-click="connect()" class="button button-pk1"><img class="icon-pk" src="img/ic_connect@2x.png">Connect</button>
-      <button ng-show="isFavorite()" ng-click="refer()" class="button button-pk1"><img class="icon-pk" src="img/ic_logosymbol@2x.png">Refer</button>
-
-      <pre ng-show="debug">item: {{item|json}}</pre>
-      <pre ng-show="debug">owner: {{owner|json}}</pre>
-      <pre ng-show="debug">busCust: {{busCust|json}}</pre>
+      <pre class="text-small-pk">item: {{item|json}}</pre>
+      <pre class="text-small-pk">owner: {{owner|json}}</pre>
+      <pre class="text-small-pk">busCust: {{busCust|json}}</pre>
   </ion-content>
 </ion-view>
 

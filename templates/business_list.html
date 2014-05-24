@@ -19,34 +19,34 @@
 
 
 <script id="modal.html" type="text/ng-template">
-    <div class="modal" ang-controller="ModalCtrl">
-        <ion-header-bar class="bar bar-header bar-positive">
-            <h1 class="title">Invite Business</h1>
-            <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
-        </ion-header-bar>
-        <ion-content>
-            <div class="padding">
-                <div class="list">
-                    <label class="item item-input">
-                        <span class="input-label">Phone Number</span>
-                        <input ng-model="invite.phone" type="text">
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">First Name</span>
-                        <input ng-model="invite.first" type="text">
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">Last Name</span>
-                        <input ng-model="invite.last" type="text">
-                    </label>
-                    <label class="item item-input">
-                        <span class="input-label">Business Name</span>
-                        <input ng-model="invite.businessName" type="text">
-                    </label>
-                    {{invite.error}}
-                    <button class="button button-full button-positive" ng-click="doInvite()">Invite</button>
-                </div>
-            </div>
-        </ion-content>
-    </div>
+<div class="modal" ang-controller="ModalCtrl">
+    <ion-header-bar class="bar bar-header bar-positive">
+        <h1 class="title">Invite Business</h1>
+        <button class="button button-clear button-primary" ng-click="modal.hide()">Cancel</button>
+    </ion-header-bar>
+    <ion-content>
+        <div class="padding">
+            <div class="list-pk2">
+                <label class="item item-input">
+                    <span class="input-label">Phone Number</span>
+                    <input ng-model="invite.phone" type="text">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">First Name</span>
+                    <input ng-model="invite.first" type="text">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Last Name</span>
+                    <input ng-model="invite.last" type="text">
+                </label>
+                <label class="item item-input">
+                    <span class="input-label">Business Name</span>
+                    <input ng-model="invite.businessName" type="text">
+                </label>
+                {{invite.error}}
+
+            </div><div class="button-pk2"><button class="button button-pk1" ng-click="doInvite()"> <img class="icon-pk" src="img/ic_refer@2x.png">Invite</button></div>
+        </div>
+    </ion-content>
+</div>
 </script>
