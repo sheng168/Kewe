@@ -47,7 +47,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     }
 
     $scope.refer = function() {
-      alert('Select a friend to refer to.');
+//      alert('Select a friend to refer to.');
       $rootScope.businessIdToRefer = busId;
       $state.go('app.friend_list');
     }
@@ -156,7 +156,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     };
   })
 
-  .controller('CustomerListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams) {
+  .controller('CustomerListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams, $ionicActionSheet, $window) {
     var uid = $stateParams.businessId;
     if (uid === '_my_' || uid == '') {
       uid = Auth.user().get('business').id;
@@ -187,6 +187,37 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
     $scope.filter = function(value) {
       return value.active;
+    };
+
+    // Triggered on a button click, or some other target
+    $scope.invite = function() {
+
+      // Show the action sheet
+      $ionicActionSheet.show({
+        titleText: 'Invite customer using',
+        buttons: [
+          { text: 'Email' },
+          { text: 'Web' }
+        ],
+//        destructiveText: 'Delete',
+        cancelText: 'Cancel',
+        buttonClicked: function(index) {
+//          alert('click ' + index);
+          if (index == 0) {
+            $window.location = "mailto:?subject=mail subject&body=mail body";
+          } else {
+            var url = "http://localhost:63342/TipCalculator/index.html#/app/business/"+uid+"/"+Auth.user().get('person').id;
+//            $window.location = url;
+            prompt('Copy and send to invite people', url);
+          }
+          return true;
+        },
+        cancel: function() {
+          alert('cancel')
+          return false;
+        }
+      });
+
     };
   })
 
@@ -239,11 +270,12 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       $scope.modal = modal
     })
 
-    $scope.add = function(){
-      $scope.modal.show()
-    }
-
     var uid = Auth.user().get('person').id;
+
+    $scope.add = function(){
+      prompt('Copy and send this to your friend', 'http://localhost:63342/TipCalculator/index.html#/app/person/'+uid);
+//      $scope.modal.show()
+    }
 
     $scope.invite = {person: uid};
 
