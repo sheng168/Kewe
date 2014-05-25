@@ -7,16 +7,19 @@
   </ion-nav-buttons>
   <ion-content class="has-header" padding="true">
 
-      <div class="item item-avatar">
-          <img ng-src="{{item.imageFile.url || 'img/person.png'}}">
+      <div class="item-avatar-pk-business">
+          <img class="image-left-pk" ng-src="{{item.imageFile.url || 'img/person.png'}}">
           <b>{{item.first}} {{item.last}}</b>
           <p>{{item.updatedAt}}</p>
       </div>
 
-      <button ng-show="true" ng-click="add()" class="button button-positive button-block">Add as Friend</button>
-      <a ng-href="#/app/favorite/{{item.objectId}}"><button class="button button-positive button-block">Favorite Businesses</button></a>
-      <a ng-href="#/app/message/per-{{chat()}}"><button class="button button-positive button-block">Direct Chat</button></a>
-      <button ng-show="businessIdToRefer" ng-click="refer()" class="button button-positive button-block">Refer to {{businessIdToRefer}}</button>
+      <div class="spacer-pk"></div>
+      <div class="button-pk2">
+          <a ng-href="#/app/favorite/{{item.objectId}}"><button class="button button-pk1">  <img class="icon-pk" src="img/ic_fav_busi@2x.png"> Favorite Businesses</button></a>
+          <a ng-href="#/app/message/per-{{chat()}}"><button class="button button-pk1">  <img class="icon-pk" src="img/ic_chat@2x.png"> Direct Chat</button></a>
+          <button ng-show="businessIdToRefer" ng-click="refer()" class="button button-pk1">  <img class="icon-pk" src="img/ic_refer@2x.png"> Refer to {{businessIdToRefer}}</button>
+          <button ng-show="true" ng-click="add()" class="button button-pk1"><img class="icon-pk" src="img/ic_refer@2x.png">Add as Friend</button>
+      </div>
 
       <p>{{item_ | json}}</p>
   </ion-content>
