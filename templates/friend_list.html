@@ -7,6 +7,13 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
     <ion-list>
+
+        <ion-item ng-show="businessRefer" class="item item-avatar">
+            <img ng-src="{{item.imageFile.url || 'img/business.png'}}">
+            <h3>Business {{businessRefer.name}}</h3>
+            <p>Select friend to refer {{businessRefer.objectId}}</p>
+        </ion-item>
+
       <ion-item class="item item-avatar" ng-repeat="item in items | orderByPriority | orderBy:'name'" href="#/app/person/{{item.objectId}}">
           <img ng-src="{{item.imageFile.url || 'img/person.png'}}">
         <h3>{{item.first}} {{item.last}}</h3>

@@ -9,6 +9,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ParseAuth'])
 
 .constant('PARSE_ID', 'oaZEFA20jlwt54s8ciE1I0HGRhC96kbkyGH7rbtT')
 .constant('PARSE_KEY', 'fc5YPhAOEEMYaNu2EMp1bZWsB6dWt4Z1o8o45UA0')
+.constant('URL', 'http://localhost:63342/TipCalculator/index.html')
 .value('fireUrl', 'https://voved.firebaseio.com/')
 
 .run(function($ionicPlatform, Auth) {

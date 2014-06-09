@@ -33,6 +33,29 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 //    $scope.busCust = $firebase(root.child('index/CustomerBusiness').child(personId));
 
     $scope.connect = function() {
+
+      var rec = {
+        business:{objectId:busId},
+        customer:{objectId:personId}
+      }
+
+      root.child('class/BusinessCustomer').child('_'+busId + '_' + personId).set(rec, function(error) {
+        if (error) {
+          alert('Data could not be saved.' + error);
+        } else {
+          alert('Data saved successfully.');
+        }
+      });
+//      root.child('index/PersonBusiness').child(personId).child(busId).set(true, function(error) {
+//        if (error) {
+//          alert('Data could not be saved.' + error);
+//        } else {
+//          alert('Data saved successfully.');
+//        }
+//      });
+    }
+
+    $scope.connect_parse = function() {
       Parse.Cloud.run('DoConnect', {business:busId, customer:personId}, {
         success: function(result) {
           // result is 'Hello world!'
@@ -49,6 +72,8 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.refer = function() {
 //      alert('Select a friend to refer to.');
       $rootScope.businessIdToRefer = busId;
+      $rootScope.businessRefer = bus;
+
       $state.go('app.friend_list');
     }
 
@@ -156,7 +181,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     };
   })
 
-  .controller('CustomerListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams, $ionicActionSheet, $window) {
+  .controller('CustomerListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams, $ionicActionSheet, $window, URL) {
     var uid = $stateParams.businessId;
     if (uid === '_my_' || uid == '') {
       uid = Auth.user().get('business').id;
@@ -206,7 +231,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
           if (index == 0) {
             $window.location = "mailto:?subject=mail subject&body=mail body";
           } else {
-            var url = "http://localhost:63342/TipCalculator/index.html#/app/business/"+uid+"/"+Auth.user().get('person').id;
+            var url = URL+"#/app/business/"+uid+"/"+Auth.user().get('person').id;
 //            $window.location = url;
             prompt('Copy and send to invite people', url);
           }
@@ -262,7 +287,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     };
   })
 
-  .controller('FriendListCtrl', function($scope, $firebase, fireUrl, Auth, $ionicModal) {
+  .controller('FriendListCtrl', function($scope, $firebase, fireUrl, Auth, $ionicModal, URL) {
     $ionicModal.fromTemplateUrl('modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -273,7 +298,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     var uid = Auth.user().get('person').id;
 
     $scope.add = function(){
-      prompt('Copy and send this to your friend', 'http://localhost:63342/TipCalculator/index.html#/app/person/'+uid);
+      prompt('Copy and send this to your friend', URL+'#/app/person/'+uid);
 //      $scope.modal.show()
     }
 
@@ -500,17 +525,19 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
   })
 
 .controller('PersonCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, $rootScope) {
-    var id1 = '_';
+    var idmy = '_';
     if (Auth.user()) {
-      id1 = Auth.user().get('person').id;
+      idmy = Auth.user().get('person').id;
     }
-    var id2 = $stateParams.id;
+    var idp = $stateParams.id;
 
     var root = new Firebase(fireUrl);
-    var ref = root.child('class/Person').child(id2);
+    var ref = root.child('class/Person').child(idp);
 
     $scope.item = $firebase(ref);
 
+    var id1 = idmy;
+    var id2 = idp;
     if (id1 > id2) {
       var tmp = id1;
       id1 = id2;
@@ -521,8 +548,26 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       return id1 + '-' + id2;
     }
 
+    $scope.friend = function() {
+      var id = idmy + '-' + idp;
+      var rec = {
+        objectId: id,
+        person: {objectId: idmy},
+        friend: {objectId: idp}
+      };
+      root.child('index/PersonFriend').child(idmy).child(idp).set({
+        friend:{objectId:idp}
+      }, function(error) {
+        if (error) {
+          alert('Data could not be saved.' + error);
+        } else {
+          alert('Data saved successfully.' + idmy);
+        }
+      });
+    }
+
     $scope.refer = function() {
-      alert('Refer ' + $rootScope.businessIdToRefer + ' to ' + id2);
+      alert('Refer ' + $rootScope.businessIdToRefer + ' to ' + idp);
 
       var busCust = {
         "a_inviterName" : "",
@@ -530,7 +575,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         "customerAccept" : true,
         "inviter" : {
           "className" : "Person",
-          "objectId" : id1,
+          "objectId" : idmy,
           "__type" : "Pointer"
         },
         "a_businessName" : "",
@@ -539,7 +584,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         "a_customerName" : "",
         "customer" : {
           "className" : "Person",
-          "objectId" : id2,
+          "objectId" : idp,
           "__type" : "Pointer"
         },
         "createdAt" : "2013-10-16T18:34:25.683Z",
@@ -559,6 +604,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       });
 
       $rootScope.businessIdToRefer = '';
+      $rootScope.businessRefer = undefined;
     }
 
   })
