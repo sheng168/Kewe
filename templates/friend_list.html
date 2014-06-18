@@ -7,7 +7,7 @@
   </ion-nav-buttons>
   <ion-content class="has-header">
     <ion-list>
-      <ion-item class="item item-avatar" ng-click="openDetailPage()" ng-repeat="item in items | orderByPriority | orderBy:'name'" href="#/app/person/{{item.objectId}}">
+      <ion-item class="item item-avatar" ng-repeat="item in items | orderByPriority | orderBy:'name'" href="#/app/person/{{item.objectId}}">
           <img ng-src="{{item.imageFile.url || 'img/person.png'}}">
         <h3>{{item.first}} {{item.last}}</h3>
         <p>{{item.createdAt}}</p>

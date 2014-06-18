@@ -1,20 +1,5 @@
 angular.module('starter.controllers', ['firebase', 'UserService'])
 
-    .service('shared', function() {
-        var showDetail = false;
-
-        return {
-            getShowDetail: function () {
-                //console.log('getShowDetail:' + showDetail);
-                return showDetail;
-            },
-            setShowDetail: function (value) {
-                showDetail = value;
-                console.log('setShowDetail:' + showDetail);
-            }
-        };
-    })
-
 .controller('AppCtrl', function($scope) {
     $scope.user = undefined;
 
@@ -28,7 +13,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
 })
 
-  .controller('BusinessCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, UserService, $state, $rootScope, shared) {
+  .controller('BusinessCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, UserService, $state, $rootScope) {
     var root = new Firebase(fireUrl);
     var busId = $stateParams.id;
     var ref = root.child('class/Business').child(busId);
@@ -71,21 +56,9 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       return UserService.isFavorite(busId);
     };
 
+  })
 
-    $scope.isDetailPage = function() {
-        console.log ('business controller: ' + shared.getShowDetail());
-
-        if (shared.getShowDetail() == true) {
-            console.log ('business controller 2: ' + shared.getShowDetail());
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-  }) //end of BusinessCtrl
-
-  .controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal, UserService, shared) {
+  .controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal, UserService) {
     var ref = new Firebase(fireUrl).child('public/Business');
 
 //    var join = Firebase.util.join(
@@ -181,11 +154,6 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.isFavorite = function(busId) {
       return UserService.isFavorite(busId);
     };
-
-    $scope.openDetailPage = function() {
-        shared.setShowDetail(true);
-        console.log('business list controller - shared show detail:'+shared.getShowDetail());
-    }
   })
 
   .controller('CustomerListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams, $ionicActionSheet, $window) {
@@ -294,7 +262,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     };
   })
 
-  .controller('FriendListCtrl', function($scope, $firebase, fireUrl, Auth, $ionicModal, shared) {
+  .controller('FriendListCtrl', function($scope, $firebase, fireUrl, Auth, $ionicModal) {
     $ionicModal.fromTemplateUrl('modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -351,11 +319,6 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     $scope.filter = function(value) {
       return value.active;
     };
-
-    $scope.openDetailPage = function() {
-        shared.setShowDetail(true);
-        console.log('Friend list controller - shared show detail:'+shared.getShowDetail());
-    }
   })
 
   .controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
@@ -536,7 +499,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     }
   })
 
-.controller('PersonCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, $rootScope, shared) {
+.controller('PersonCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, $rootScope) {
     var id1 = '_';
     if (Auth.user()) {
       id1 = Auth.user().get('person').id;
@@ -596,20 +559,9 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       });
 
       $rootScope.businessIdToRefer = '';
-    };
-
-    $scope.isDetailPage = function() {
-        console.log ('business controller: ' + shared.getShowDetail());
-
-        if (shared.getShowDetail() == true) {
-            console.log ('business controller 2: ' + shared.getShowDetail());
-            return true;
-        } else {
-            return false;
-        }
     }
 
-  }) //PersonCtrl
+  })
 
   //////////////
 
