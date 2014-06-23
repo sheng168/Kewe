@@ -46,6 +46,10 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
           alert('Data saved successfully.');
         }
       });
+
+//      root.child('index/CustomerBusiness').child(personId).child(busId).set(rec);
+//      root.child('index/BusinessCustomer').child(busId).child(personId).set(rec);
+
 //      root.child('index/PersonBusiness').child(personId).child(busId).set(true, function(error) {
 //        if (error) {
 //          alert('Data could not be saved.' + error);
@@ -248,7 +252,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
   .controller('FavoriteListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams) {
     var ref = new Firebase(fireUrl).child('class/Business');
-    var refFav = new Firebase(fireUrl).child('index/CustomerBusiness');
+    var refFav = new Firebase(fireUrl).child('index/BusinessCustomer_customer');
 
     $scope.business_list = {}
 
