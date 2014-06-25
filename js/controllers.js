@@ -477,6 +477,14 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
     var bus = $firebase(ref);
     $scope.item = bus;
+    bus.$on('change', function(){
+      if (bus.phone && bus.phone.indexOf('0.0') == 0) {
+        console.log('hiding fake phone');
+        bus.phone = '';
+      } else {
+        console.log('ok');
+      }
+    })
 
     $scope.save = function(){
       var bus = $scope.item;
