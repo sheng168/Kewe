@@ -226,23 +226,24 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         titleText: 'Invite customer using',
         buttons: [
           { text: 'Email' },
-          { text: 'Web' }
+          { text: 'Other' }
         ],
 //        destructiveText: 'Delete',
         cancelText: 'Cancel',
         buttonClicked: function(index) {
 //          alert('click ' + index);
+          var url = URL+"#/app/business/"+uid+"/"+Auth.user().get('person').id;
+//
           if (index == 0) {
-            $window.location = "mailto:?subject=mail subject&body=mail body";
+            $window.location = "mailto:?subject=Check out Repher&body=" + url;
           } else {
-            var url = URL+"#/app/business/"+uid+"/"+Auth.user().get('person').id;
-//            $window.location = url;
-            prompt('Copy and send to invite people', url);
+              $window.location = url;
+            prompt('Copy and send link to invite people', url);
           }
           return true;
         },
         cancel: function() {
-          alert('cancel')
+//          alert('cancel')
           return false;
         }
       });

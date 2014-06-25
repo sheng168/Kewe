@@ -28,7 +28,7 @@
 
               <button class="button button-block button-positive" type="submit">Save</button>
 
-        <pre ng-show="false">{{user|json}}
+        <pre ng-show="true">{{user|json}}
         </pre>
           </div>
       </form>
@@ -40,7 +40,7 @@
         <div class="item item-avatar">
           <img ng-src="{{item.imageFile.url || 'img/business.png'}}">
           <b>{{item.name}}</b>
-          <p>{{item.objectId}}</p>
+          <p>{{item.city}}, {{item.state}}</p>
         </div>
 
         <label class="item item-input">
@@ -73,7 +73,7 @@
 
         <button class="button button-block button-positive" type="submit">Save</button>
 
-        <pre>{{item|json}}
+        <pre ng-show="!debug">{{item|json}}
         </pre>
       </div>
     </form>
