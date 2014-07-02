@@ -87,7 +87,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
   })
 
-  .controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal, UserService) {
+  .controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal, UserService, $rootScope) {
     var ref = new Firebase(fireUrl).child('public/Business');
 
 //    var join = Firebase.util.join(
@@ -181,7 +181,12 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         return 8888;
     };
     $scope.isFavorite = function(busId) {
-      return UserService.isFavorite(busId);
+//      return UserService.isFavorite(busId);
+      if ($rootScope.favorites[busId]) {
+        return true;
+      } else {
+        return false;
+      }
     };
   })
 
@@ -192,7 +197,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     }
 
     var refDetail = new Firebase(fireUrl).child('class/Person');
-    var refIndex = new Firebase(fireUrl).child('index/BusinessCustomer').child(uid);
+    var refIndex = new Firebase(fireUrl).child('index/BusinessCustomer_business').child(uid);
 
     $scope.items = {}
 
@@ -208,8 +213,9 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         } else {
           val.customer = snap.val();
 
-          $scope.items[snap.name()] = val;
-          $scope.$apply();
+          $scope.$apply(function(){
+            $scope.items[snap.name()] = val;
+          });
         }
       })
     })
@@ -253,8 +259,6 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
   .controller('FavoriteListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams) {
     var ref = new Firebase(fireUrl).child('class/Business');
-    var refFav = new Firebase(fireUrl).child('index/BusinessCustomer_customer');
-
     $scope.business_list = {}
 
     var uid = $stateParams.personId;
@@ -262,15 +266,16 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       uid = Auth.user().get('person').id;
     }
 
-    var busRef = refFav.child(uid);
-    console.log(busRef.toString());
+    var busRef = new Firebase(fireUrl).child('index/BusinessCustomer_customer').child(uid);
+    console.log('busRef', busRef.toString());
 
+    // load bus id, then load bus detail
     busRef.on('child_added', function(data){
       console.log(data.name());
       ref.child(data.val().business.objectId).on('value', function(snap){
-        console.log(snap.ref().toString(), snap.val())
+        console.log('business', snap.ref().toString(), snap.val())
         if (snap.val() === null) {
-
+//          console.error()
         } else {
           $scope.business_list[snap.name()] = snap.val();
           $scope.$apply();
@@ -326,7 +331,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
 
     var refDetail = new Firebase(fireUrl).child('class/Person');
-    var refIndex = new Firebase(fireUrl).child('index/PersonFriend').child(uid);
+    var refIndex = new Firebase(fireUrl).child('index/PersonFriend_person').child(uid);
 
     $scope.items = {}
 

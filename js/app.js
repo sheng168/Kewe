@@ -9,15 +9,44 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ParseAuth'])
 
 .constant('PARSE_ID', 'oaZEFA20jlwt54s8ciE1I0HGRhC96kbkyGH7rbtT')
 .constant('PARSE_KEY', 'fc5YPhAOEEMYaNu2EMp1bZWsB6dWt4Z1o8o45UA0')
-.constant('URL', 'http://localhost:63342/TipCalculator/index.html')
+.constant('URL', 'http://localhost:63342/Voved/index.html')
+.constant('DEBUG', true)
+.constant('FIREROOT', new Firebase('https://voved.firebaseio.com'))
+
 .value('fireUrl', 'https://voved.firebaseio.com/')
 
-.run(function($ionicPlatform, Auth) {
+.run(function($ionicPlatform, Auth, FIREROOT, $rootScope, $firebase) {
   $ionicPlatform.ready(function() {
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
   });
+
+    $rootScope.DEBUG = false;
+
+    var user = Auth.user();
+    console.log('user', user);
+
+    function loadUser(personId) {
+      console.log('person', personId);
+      $rootScope.friends = $firebase(FIREROOT.child('index/PersonFriend_person').child(personId));
+      $rootScope.favorites = $firebase(FIREROOT.child('index/BusinessCustomer_customer').child(personId));
+
+      $rootScope.friends.$on('loaded', function () {
+        console.log('friends loaded', $rootScope.friends);
+      })
+      $rootScope.favorites.$on('change', function () {
+        console.log('favorites change', $rootScope.favorites);
+      })
+    }
+
+    if (user) {
+      if (user.get('person')) {
+        var personId = user.get('person').id;
+        loadUser(personId);
+      }
+
+    }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
