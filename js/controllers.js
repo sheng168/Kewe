@@ -300,7 +300,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     };
   })
 
-  .controller('FriendListCtrl', function($scope, $firebase, fireUrl, Auth, $ionicModal, URL) {
+  .controller('FriendListCtrl', function($scope, $firebase, fireUrl, Auth, $ionicModal, $ionicActionSheet, $window, URL) {
     $ionicModal.fromTemplateUrl('modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -311,8 +311,39 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     var uid = Auth.user().get('person').id;
 
     $scope.add = function(){
-      prompt('Copy and send this to your friend', URL+'#/app/person/'+uid);
+      var url = URL + '#/app/person/' + uid;
+
+//      prompt('Copy and send this to your friend', url);
 //      $scope.modal.show()
+      // Show the action sheet
+      $ionicActionSheet.show({
+        titleText: 'Invite friend using',
+        buttons: [
+          { text: 'Email' },
+//          { text: 'SMS' },
+          { text: 'Other' }
+        ],
+//        destructiveText: 'Delete',
+        cancelText: 'Cancel',
+        buttonClicked: function(index) {
+//          alert('click ' + index);
+//
+          if (index == 0) {
+            $window.location = "mailto:?subject=Check out Repher&body=Join me on Repher \n" + url;
+//          } else if (index == 1) {
+//            $window.location = "sms:?subject=Check out Repher&body=" + url;
+          } else {
+//            $window.location = url;
+            prompt('Copy and send link to invite people', url);
+          }
+          return true;
+        },
+        cancel: function() {
+//          alert('cancel')
+          return false;
+        }
+      });
+
     }
 
     $scope.invite = {person: uid};
