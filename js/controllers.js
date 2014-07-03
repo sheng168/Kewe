@@ -329,12 +329,25 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         buttonClicked: function(index) {
 //          alert('click ' + index);
 //
+          var subject = encodeURIComponent('Check out Repher');
+          var body = encodeURIComponent("Join me on Repher \n" + url)
           if (index == 0) {
-            $window.location = "mailto:?subject=Check out Repher&body=Join me on Repher \n" + url;
+            $window.location = "mailto:?subject="+subject+"&body=" + body;
           } else if (index == 1) {
-            $window.location = "sms:?subject=Check out Repher&body=" + url;
+            var sms;
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1)
+              sms = "sms:;body=";
+            else
+              sms = "sms:?body=";
+
+//            $window.location = sms + body;
+
+            location.href = sms+body;
           } else if (index == 2) {
-            $window.location = "http://zxing.org/w/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl=http%3A%2F%2Frepher.voved.net%2F%23%2Fapp%2Fperson%2F" + uid;
+            var url = URL + '#app/person/' + uid;
+            console.log('url', url)
+            $window.location = "http://zxing.org/w/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl=" + encodeURIComponent(url);
           } else {
 //            $window.location = url;
             prompt('Copy and send link to invite people', url);
