@@ -232,6 +232,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         titleText: 'Invite customer using',
         buttons: [
           { text: 'Email' },
+          { text: 'SMS' },
           { text: 'Other' }
         ],
 //        destructiveText: 'Delete',
@@ -242,8 +243,10 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 //
           if (index == 0) {
             $window.location = "mailto:?subject=Check out Repher&body=" + url;
+          } else if (index == 1) {
+            $window.location = "sms:?subject=Check out Repher&body=" + url;
           } else {
-              $window.location = url;
+//            $window.location = url;
             prompt('Copy and send link to invite people', url);
           }
           return true;
