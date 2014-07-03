@@ -320,7 +320,8 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         titleText: 'Invite friend using',
         buttons: [
           { text: 'Email' },
-//          { text: 'SMS' },
+          { text: 'SMS' },
+          { text: 'QR Code Scan' },
           { text: 'Other' }
         ],
 //        destructiveText: 'Delete',
@@ -330,8 +331,10 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 //
           if (index == 0) {
             $window.location = "mailto:?subject=Check out Repher&body=Join me on Repher \n" + url;
-//          } else if (index == 1) {
-//            $window.location = "sms:?subject=Check out Repher&body=" + url;
+          } else if (index == 1) {
+            $window.location = "sms:?subject=Check out Repher&body=" + url;
+          } else if (index == 2) {
+            $window.location = "http://zxing.org/w/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl=http%3A%2F%2Frepher.voved.net%2F%23%2Fapp%2Fperson%2F" + uid;
           } else {
 //            $window.location = url;
             prompt('Copy and send link to invite people', url);
