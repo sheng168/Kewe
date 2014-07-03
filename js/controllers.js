@@ -311,7 +311,6 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     var uid = Auth.user().get('person').id;
 
     $scope.add = function(){
-      var url = URL + '#/app/person/' + uid;
 
 //      prompt('Copy and send this to your friend', url);
 //      $scope.modal.show()
@@ -329,6 +328,8 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         buttonClicked: function(index) {
 //          alert('click ' + index);
 //
+          var url = URL + '#/app/person/' + uid;
+
           var subject = encodeURIComponent('Check out Repher');
           var body = encodeURIComponent("Join me on Repher \n" + url)
           if (index == 0) {
