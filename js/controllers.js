@@ -576,14 +576,17 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
         person: {objectId: idmy},
         friend: {objectId: idp}
       };
-      root.child('index/PersonFriend').child(idmy).child(idp).set({
+      root.child('index/PersonFriend_person').child(idmy).child(idp).set({
         friend:{objectId:idp}
       }, function(error) {
         if (error) {
           alert('Data could not be saved.' + error);
         } else {
-          alert('Data saved successfully.' + idmy);
+          alert('Data saved successfully.');
         }
+      });
+      root.child('index/PersonFriend_person').child(idp).child(idmy).set({
+        friend:{objectId:idmy}
       });
     }
 
