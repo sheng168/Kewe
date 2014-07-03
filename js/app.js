@@ -47,6 +47,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ParseAuth'])
       }
 
     }
+
+    $rootScope.cancelRefer = function() {
+      console.log('cancelRefer', $rootScope.businessRefer);
+      $rootScope.businessRefer = undefined;
+    }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
