@@ -42,8 +42,10 @@ angular.module('ParseAuth', [])
 
     $rootScope.logout = function() {
       console.log("logout");
-      Auth.logout();
-      $state.go('app.login');
+      if (confirm("Logout? If you haven't set your email and phone number, you won't be able to log back in.")) {
+        Auth.logout();
+        $state.go('app.login');
+      }
     };
 
     return Auth;
