@@ -18,17 +18,21 @@
       <p class="text-small-pk">{{item.location.latitude|number:3}},{{item.location.longitude|number:3}}</p>
       <!--<p>Phone: <a href="tel://{{item.phone}}">Call {{item.phone}}</a></p>-->
       <div class="button-pk2">
-          <a ng-href="#/app/message/bus-{{item.objectId}}"><button class="button button-pk1">
+          <a ng-href="#/app/message/bus-{{item.objectId}}"><button ng-disabled="!isSignedIn()" class="button button-pk1">
               <img class="icon-pk" src="img/ic_chat@2x.png">Chat</button>
           </a>
           <a href="tel://{{item.phone}}">
-              <button class="button button-pk1">
+              <button ng-disabled="!isSignedIn()" class="button button-pk1">
                   <img class="icon-pk" src="img/ic_phone@2x.png">Call</button>
           </a>
-          <a ng-href="#/app/customer/{{item.objectId}}"><button class="button button-pk1">
+          <a ng-href="#/app/customer/{{item.objectId}}"><button ng-disabled="!isSignedIn()" class="button button-pk1">
               <img class="icon-pk" src="img/ic_friends@2x.png">Connected Friends</button></a>
-          <button ng-hide="favorites[item.$id]" ng-click="connect()" class="button button-pk1">Add to Favorites<img class="icon-pk" src="img/ic_connect@2x.png"></button>
-          <button ng-show="favorites[item.$id]" ng-click="refer()" class="button button-pk1">Refer to Friend<img class="icon-pk" src="img/ic_logosymbol@2x.png"></button>
+          <button ng-disabled="!isSignedIn()" ng-hide="favorites[item.$id]" ng-click="connect()" class="button button-pk1">Add to Favorites<img class="icon-pk" src="img/ic_connect@2x.png"></button>
+          <button ng-disabled="!isSignedIn()" ng-show="favorites[item.$id]" ng-click="refer()" class="button button-pk1">Refer to Friend<img class="icon-pk" src="img/ic_logosymbol@2x.png"></button>
+      </div>
+      <div ng-hide="isSignedIn()">
+        If you are already on Re.pher, please <a href="#/app/login">login</a>.<br>
+        Not on Re.pher yet, join-in.
       </div>
 
       <pre ng-show="DEBUG" class="text-small-pk">item: {{item|json}}</pre>
