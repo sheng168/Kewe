@@ -15,10 +15,14 @@
 
       <div class="spacer-pk"></div>
       <div class="button-pk2">
-          <a ng-href="#/app/favorite/{{item.objectId}}"><button class="button button-pk1">  <img class="icon-pk" src="img/ic_fav_busi@2x.png"> Favorite Businesses</button></a>
-          <a ng-href="#/app/message/per-{{chat()}}"><button class="button button-pk1">  <img class="icon-pk" src="img/ic_chat@2x.png"> Direct Chat</button></a>
-          <button ng-show="businessRefer" ng-click="refer()" class="button button-pk1">  <img class="icon-pk" src="img/ic_refer@2x.png"> Refer this friend to {{businessRefer.name}}</button>
-          <button ng-hide="friends[item.$id]" ng-click="friend()" class="button button-pk1"><img class="icon-pk" src="img/ic_refer@2x.png">Add as Friend</button>
+          <a ng-href="#/app/favorite/{{item.objectId}}"><button ng-disabled="!isSignedIn()" class="button button-pk1">  <img class="icon-pk" src="img/ic_fav_busi@2x.png"> Favorite Businesses</button></a>
+          <a ng-href="#/app/message/per-{{chat()}}"><button ng-disabled="!isSignedIn()" class="button button-pk1">  <img class="icon-pk" src="img/ic_chat@2x.png"> Direct Chat</button></a>
+          <button ng-disabled="!isSignedIn()" ng-show="businessRefer" ng-click="refer()" class="button button-pk1">  <img class="icon-pk" src="img/ic_refer@2x.png"> Refer this friend to {{businessRefer.name}}</button>
+          <button ng-disabled="!isSignedIn()" ng-hide="friends[item.$id]" ng-click="friend()" class="button button-pk1"><img class="icon-pk" src="img/ic_refer@2x.png">Add as Friend</button>
+      </div>
+      <div ng-hide="isSignedIn()">
+          <a href="#/app/login">Sign In</a><br>
+          Not on Re.pher? <a href="#/app/mybusiness">Join now</a>
       </div>
 
       <p>{{item_ | json}}</p>

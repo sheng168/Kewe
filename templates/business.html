@@ -30,9 +30,10 @@
           <button ng-disabled="!isSignedIn()" ng-hide="favorites[item.$id]" ng-click="connect()" class="button button-pk1">Add to Favorites<img class="icon-pk" src="img/ic_connect@2x.png"></button>
           <button ng-disabled="!isSignedIn()" ng-show="favorites[item.$id]" ng-click="refer()" class="button button-pk1">Refer to Friend<img class="icon-pk" src="img/ic_logosymbol@2x.png"></button>
       </div>
+
       <div ng-hide="isSignedIn()">
-        If you are already on Re.pher, please <a href="#/app/login">login</a>.<br>
-        Not on Re.pher yet, join-in.
+          <a href="#/app/login">Sign In</a><br>
+          Not on Re.pher? <a href="#/app/mybusiness">Join now</a>
       </div>
 
       <pre ng-show="DEBUG" class="text-small-pk">item: {{item|json}}</pre>
