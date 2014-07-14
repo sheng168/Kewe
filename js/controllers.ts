@@ -1,3 +1,6 @@
+/// <reference path="types.ts"/>
+
+
 angular.module('starter.controllers', ['firebase', 'UserService'])
 
 .controller('AppCtrl', function($scope) {
