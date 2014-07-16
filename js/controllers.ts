@@ -16,8 +16,8 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
 })
 
-  .controller('BusinessCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, UserService, $state, $rootScope) {
-    var root = new Firebase(fireUrl);
+  .controller('BusinessCtrl', function($scope, $stateParams, $firebase, FIREROOT, Auth, UserService, $state, $rootScope) {
+    var root = FIREROOT;
     var busId = $stateParams.id;
     var ref = root.child('class/Business').child(busId);
 
@@ -90,14 +90,14 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 
   })
 
-  .controller('BusinessListCtrl', function($scope, $firebase, fireUrl, $ionicModal, UserService, $rootScope) {
-    var ref = new Firebase(fireUrl).child('public/Business');
+  .controller('BusinessListCtrl', function($scope, $firebase, FIREROOT, $ionicModal, UserService, $rootScope) {
+    var ref = FIREROOT.child('public/Business');
 
 //    var join = Firebase.util.join(
 //      ref, {
 //        ref: ref,
 //        keyMap: {
-//          owner: new Firebase(fireUrl).child('class/Person')
+//          owner: FIREROOT.child('class/Person')
 //        }
 //      }
 //    );
@@ -193,14 +193,14 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     };
   })
 
-  .controller('CustomerListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams, $ionicActionSheet, $window, URL) {
+  .controller('CustomerListCtrl', function($scope, $firebase, FIREROOT, Auth, $stateParams, $ionicActionSheet, $window, URL) {
     var uid = $stateParams.businessId;
     if (uid === '_my_' || uid == '') {
       uid = Auth.user().get('business').id;
     }
 
-    var refDetail = new Firebase(fireUrl).child('class/Person');
-    var refIndex = new Firebase(fireUrl).child('index/BusinessCustomer_business').child(uid);
+    var refDetail = FIREROOT.child('class/Person');
+    var refIndex = FIREROOT.child('index/BusinessCustomer_business').child(uid);
 
     $scope.items = {}
 
@@ -263,8 +263,8 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     };
   })
 
-  .controller('FavoriteListCtrl', function($scope, $firebase, fireUrl, Auth, $stateParams) {
-    var ref = new Firebase(fireUrl).child('class/Business');
+  .controller('FavoriteListCtrl', function($scope, $firebase, FIREROOT, Auth, $stateParams) {
+    var ref = FIREROOT.child('class/Business');
     $scope.business_list = {}
 
     var uid = $stateParams.personId;
@@ -272,7 +272,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       uid = Auth.user().get('person').id;
     }
 
-    var busRef = new Firebase(fireUrl).child('index/BusinessCustomer_customer').child(uid);
+    var busRef = FIREROOT.child('index/BusinessCustomer_customer').child(uid);
     console.log('busRef', busRef.toString());
 
     // load bus id, then load bus detail
@@ -303,7 +303,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     };
   })
 
-  .controller('FriendListCtrl', function($scope, $firebase, fireUrl, Auth, $ionicModal, $ionicActionSheet, $window, URL) {
+  .controller('FriendListCtrl', function($scope, $firebase, FIREROOT, Auth, $ionicModal, $ionicActionSheet, $window, URL) {
     $ionicModal.fromTemplateUrl('modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -384,8 +384,8 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     }
 
 
-    var refDetail = new Firebase(fireUrl).child('class/Person');
-    var refIndex = new Firebase(fireUrl).child('index/PersonFriend_person').child(uid);
+    var refDetail = FIREROOT.child('class/Person');
+    var refIndex = FIREROOT.child('index/PersonFriend_person').child(uid);
 
     $scope.items = {}
 
@@ -482,7 +482,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     };
   })
 
-.controller('MessageListCtrl', function($scope, $firebase, fireUrl, $timeout, $ionicScrollDelegate, Auth, $stateParams) {
+.controller('MessageListCtrl', function($scope, $firebase, FIREROOT, $timeout, $ionicScrollDelegate, Auth, $stateParams) {
     var roomId = $stateParams.roomId;
     var userid = Auth.userId();
     if (!userid) {
@@ -492,7 +492,7 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       $scope.input = {author: author};
     }
 
-    var root = new Firebase(fireUrl);
+    var root = FIREROOT;
     var ref = root.child('public/chat').child(roomId).child('messages');
 
     $scope.items = $firebase(ref.limit(50));
@@ -529,10 +529,10 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
   })
 
 
-.controller('MyBusinessCtrl', function($scope, $firebase, fireUrl, Auth) {
+.controller('MyBusinessCtrl', function($scope, $firebase, FIREROOT, Auth) {
     var id = Auth.user().get('business').id;
 
-    var root = new Firebase(fireUrl);
+    var root = FIREROOT;
     var ref = root.child('class/Business').child(id);
 
     var bus = $firebase(ref);
@@ -596,38 +596,10 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 //    }
   })
 
-.controller('MyProfileCtrl', function($scope, $firebase, fireUrl, Auth) {
+.controller('MyProfileCtrl', function($scope, $firebase, FIREROOT, Auth) {
     var id = Auth.user().get('business').id;
 
-    var root = new Firebase(fireUrl);
-    var ref = root.child('class/Business').child(id);
-
-    var bus = $firebase(ref);
-    $scope.item = bus;
-    bus.$on('change', function(){
-      if (bus.phone && bus.phone.indexOf('0.0') == 0) {
-        console.log('hiding fake phone');
-        bus.phone = '';
-      } else {
-        console.log('ok');
-      }
-    })
-
-    $scope.save = function(){
-      var bus = $scope.item;
-
-      if (bus.name && bus.name.length > 0) {
-        bus.active = true;
-      }
-
-      bus.owner = {
-        objectId: Auth.user().get('person').id
-      }
-
-      bus.$save();
-    }
-
-    $scope.person = $firebase(root.child('class/Person').child(Auth.user().get('person').id));
+    $scope.person = $firebase(FIREROOT.child('class/Person').child(Auth.user().get('person').id));
 
     var phone = Auth.user().get('username');
     var email = Auth.user().get('email');
@@ -663,14 +635,14 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
     }
   })
 
-.controller('PersonCtrl', function($scope, $stateParams, $firebase, fireUrl, Auth, $rootScope) {
+.controller('PersonCtrl', function($scope, $stateParams, $firebase, FIREROOT, Auth, $rootScope) {
     var idmy = '_';
     if (Auth.user()) {
       idmy = Auth.user().get('person').id;
     }
     var idp = $stateParams.id;
 
-    var root = new Firebase(fireUrl);
+    var root = FIREROOT;
     var ref = root.child('class/Person').child(idp);
 
     $scope.item = $firebase(ref);

@@ -30,3 +30,11 @@ interface Location {
     }
 }
 
+interface Auth {
+  isSignedIn(): boolean;
+  userId(): string;
+  user(): any;
+//  register();
+//  login();
+  logout(): void;
+}
