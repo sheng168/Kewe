@@ -571,6 +571,73 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
       email = '';
     }
 
+//    $scope.user = {
+//      phone: phone,
+//      email: email,
+//      owner: Auth.user().get('business').id != ''
+//    };
+
+//    $scope.saveProfile = function(){
+//      $scope.person.$save();
+//
+//      var parse = Auth.user();
+//
+//      if ($scope.user.phone) parse.set('username', $scope.user.phone);
+//      if ($scope.user.email) parse.set('email', $scope.user.email);
+//
+//      parse.save().then(function(obj) {
+//        // the object was saved successfully.
+//        alert('save successfull')
+//      }, function(error) {
+//        // the save failed.
+//        console.log(error)
+//        alert('save failed ' + error.message)
+//      });
+//    }
+  })
+
+.controller('MyProfileCtrl', function($scope, $firebase, fireUrl, Auth) {
+    var id = Auth.user().get('business').id;
+
+    var root = new Firebase(fireUrl);
+    var ref = root.child('class/Business').child(id);
+
+    var bus = $firebase(ref);
+    $scope.item = bus;
+    bus.$on('change', function(){
+      if (bus.phone && bus.phone.indexOf('0.0') == 0) {
+        console.log('hiding fake phone');
+        bus.phone = '';
+      } else {
+        console.log('ok');
+      }
+    })
+
+    $scope.save = function(){
+      var bus = $scope.item;
+
+      if (bus.name && bus.name.length > 0) {
+        bus.active = true;
+      }
+
+      bus.owner = {
+        objectId: Auth.user().get('person').id
+      }
+
+      bus.$save();
+    }
+
+    $scope.person = $firebase(root.child('class/Person').child(Auth.user().get('person').id));
+
+    var phone = Auth.user().get('username');
+    var email = Auth.user().get('email');
+    if (phone && phone.indexOf('0.') == 0) {
+      phone = '';
+    }
+    if (email && email.indexOf('0.') == 0) {
+      email = '';
+    }
+
     $scope.user = {
       phone: phone,
       email: email,

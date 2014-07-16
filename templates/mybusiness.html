@@ -3,38 +3,8 @@
         <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
     </ion-nav-buttons>
   <ion-content has-header="true" has-tabs="true" padding="true">
-      <form ng-submit="saveProfile()">
-          <div class="list">
-              <div class="item item-avatar">
-                  <img ng-src="{{person.imageFile.url || 'img/person.png'}}">
-                  <b>{{person.first}} {{person.last}}</b>
-                  <p>{{person.objectId}}</p>
-              </div>
-
-              <label class="item item-input">
-                  <input type="text" placeholder="First Name" ng-model="person.first">
-              </label>
-              <label class="item item-input">
-                  <input type="text" placeholder="Last Name" ng-model="person.last">
-              </label>
-              <label class="item item-input">
-                  <input type="text" placeholder="Phone" ng-model="user.phone">
-              </label>
-              <label class="item item-input">
-                  <input type="text" placeholder="Email" ng-model="user.email">
-              </label>
-
-              <ion-toggle ng-model="user.owner">Do you own a business</ion-toggle>
-
-              <button class="button button-block button-positive" type="submit">Save</button>
-
-        <pre ng-show="DEBUG">{{user|json}}
-        </pre>
-          </div>
-      </form>
-
-      <form ng-submit="save()">
-      <div class="list" ng-show="user.owner">
+    <form ng-submit="save()">
+      <div class="list" ng-show="true">
         <!--
         -->
         <div class="item item-avatar">

@@ -167,12 +167,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ParseAuth'])
       }
     })
 
-    .state('app.mybusiness', {
-      url: "/mybusiness",
+    .state('app.MyBusiness', {
+      url: "/MyBusiness",
       views: {
         'menuContent' :{
-          templateUrl: "templates/mybusiness.html",
+          templateUrl: "templates/MyBusiness.html",
           controller: 'MyBusinessCtrl'
+        }
+      }
+    })
+
+    .state('app.MyProfile', {
+      url: "/MyProfile",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/MyProfile.html",
+          controller: 'MyProfileCtrl'
         }
       }
     })
