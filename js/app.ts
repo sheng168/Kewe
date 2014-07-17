@@ -21,16 +21,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ParseAuth'])
 .constant('DEBUG', true)
 .constant('FIREROOT', new Firebase('https://voved.firebaseio.com'))
 
-//.value('fireUrl', 'https://voved.firebaseio.com/')
+.service('jsonStorage', JsonStorage)
+.value('fireUrl', 'https://voved.firebaseio.com/')
 
-.run(function($ionicPlatform, Auth, FIREROOT, $rootScope, $firebase) {
+.run(function($ionicPlatform, Auth, FIREROOT, $rootScope, $firebase, DEBUG, jsonStorage: JsonStorage) {
   $ionicPlatform.ready(function() {
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
   });
 
-    $rootScope.DEBUG = false;
+    jsonStorage.put('last', new Date())
+    $rootScope.DEBUG = DEBUG;
 
     var user = Auth.user();
     console.log('user', user);

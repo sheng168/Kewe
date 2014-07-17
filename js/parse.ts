@@ -1,3 +1,5 @@
+/// <reference path="types.ts"/>
+
 angular.module('ParseAuth', [])
   .factory('Auth', function($rootScope, $state, PARSE_ID, PARSE_KEY) {
     Parse.initialize(PARSE_ID, PARSE_KEY);
@@ -14,8 +16,10 @@ angular.module('ParseAuth', [])
       },
       register : function(form) {
         var user = new Parse.User();
-        user.set("email", form.email);
-        user.set("username", form.email);
+        if (form.email)
+          user.set("email", form.email);
+
+        user.set("username", form.username || form.email);
         user.set("password", form.password);
 
         return user.signUp(null, {

@@ -443,14 +443,14 @@ angular.module('starter.controllers', ['firebase', 'UserService'])
 //      alert('signUp')
 
       Auth.register({
-        email: Math.random() + '@voved.com' ,
+        username: Math.random() + '_' ,
         password: 'p' + Math.random()
       }).then(function(user) {
 //        loading.hide();
 
         // The root scope event will trigger and navigate
         console.log('login success', user);
-        $state.go('app.mybusiness');
+        $state.go('app.MyBusiness');
       }, function(error) {
         // Show a form error here
         $scope.message = error.message;

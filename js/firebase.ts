@@ -1,3 +1,4 @@
+/// <reference path="types.ts"/>
 // Ionic Starter App
 
 angular.module('FirebaseAuth', [])

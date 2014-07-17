@@ -38,3 +38,62 @@ interface Auth {
 //  login();
   logout(): void;
 }
+
+//.service('jsonStorage', JsonStorage)
+class JsonStorage {
+//    static STORAGE_ID = 'todos-angularjs';
+
+  // dependencies would be injected here
+  constructor() {
+
+  }
+
+  get(id:string, ifNull?:any):any {
+    var s = localStorage.getItem(id);
+    if (s) {
+      return JSON.parse(s || '{}');
+    } else {
+      return ifNull;
+    }
+  }
+
+  put(key:string, value:any) {
+    if (value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    } else {
+      localStorage.removeItem(key);
+    }
+  }
+}
+
+class Holder<T> {
+  value: T;
+
+  constructor(message: T) {
+    this.value = message;
+  }
+  set(v: T) {
+    this.value = v;
+  }
+  get(): T {
+    return this.value;
+  }
+}
+
+class Referral {
+  bus = 'todos-angularjs';
+  _person;
+
+  // dependencies would be injected here
+  constructor() {
+
+  }
+
+  business(id:string):void {
+    this._person = id;
+  }
+  person(id:string):void {
+    this._person = id;
+  }
+
+}

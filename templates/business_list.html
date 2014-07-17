@@ -10,7 +10,7 @@
       <a class="item item-avatar-pk" ng-repeat="item in business_list | orderByPriority | orderBy:'name':false"
                 href="#/app/business/{{item.objectId}}/{{item.owner.objectId}}">
           <img ng-src="{{item.imageFile.url || image(item)}}">
-        <h3>{{item.name}} <b ng-show="isFavorite(item.objectId)">+</b></h3>
+        <h3>{{item.name}} <b ng-show="favorites[item.objectId]">+</b></h3>
         <p>@{{item.city}}, {{item.state}} ({{distance(item.location) | number:1}}km)</p>
       </a>
     </div>
