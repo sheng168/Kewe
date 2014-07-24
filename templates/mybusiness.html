@@ -9,8 +9,8 @@
         -->
         <div class="item item-avatar">
           <img ng-src="{{item.imageFile.url || 'img/business.png'}}">
-          <b>{{item.name}}</b>
-          <p>{{item.city}}, {{item.state}}</p>
+          <b>{{item.name||'Business Name'}}</b>
+          <p>{{item.city||'City'}}, {{item.state||'ST'}}</p>
         </div>
 
         <label class="item item-input">
